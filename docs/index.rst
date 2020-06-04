@@ -5,7 +5,7 @@
 
 Welcome to pyAB's documentation!
 ================================
-
+Author: AdiVarma27
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
