@@ -1,0 +1,82 @@
+pyexperiment/ pymarketing
+
+AB Test:
+https://github.com/tlentali/leab
+https://github.com/guillermo-navas-palencia/cprior
+https://github.com/dancrew32/ab
+https://github.com/aschleg/hypothetical
+https://github.com/puolival/multipy
+
+Sample size:
+https://github.com/kunal-kotian/ab_testing_sample_size_calculator
+https://github.com/tommytommytommy/ab_testing
+
+Bayesian AB Test:
+https://github.com/mjoldfield/bayesian-ab
+https://github.com/tcassou/babtest
+https://github.com/cbellei/abyes
+
+Uplift Modeling:
+https://github.com/uber/causalml
+https://github.com/maks-sh/scikit-uplift
+https://github.com/wayfair/pylift
+https://github.com/duketemon/pyuplift
+
+Multi-touch attribution:
+https://github.com/eeghor/mta
+
+Udemy Course:
+https://www.udemy.com/home/my-courses/learning/
+
+
+
+*******************************
+
+Structure
+
+----> Experiments
+      -> Freq A/B Testing
+      -> Bayesian A/B Testing
+
+----> Models
+      -> Solo Model
+      -> Two Model
+      -> Direct Uplift
+
+----> Metrics
+      -> Classification
+      -> Regression
+
+----> Docs
+      -> Examples
+
+----> Testing
+      -> Experiments
+      -> Models
+
+
+*******************************
+
+New checks:
+
+- Check for consistency with Minitab
+- Check for sample size formula (N for each group type) across both directions
+
+*******************************
+
+
+
+
+
+
+
+
+
+
+
+
+Timeline:
+
+24May: Freq A/B Testing
+30May: Bayesian A/B Testing
+7June: v0.1 release
