@@ -5,7 +5,7 @@
 ====
 pyAB
 ====
-pyAB is a Python package for A/B Testing using Frequentist & Bayesian methodologies.
+pyAB is a Python package for Frequentist & Bayesian A/B Testing.
 
 
 Features:
@@ -32,9 +32,10 @@ To install from source, use the following Github link
 
 Dependencies:
 ------------
+
 pyAB has the following dependencies:
-- numpy
-- matplotlib
-- seaborn
-- scipy
-- statsmodels
++ numpy
++ matplotlib
++ seaborn
++ scipy
++ statsmodels
