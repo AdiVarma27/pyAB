@@ -52,12 +52,15 @@ Quick Start:
 
 .. code:: python
 
+   # import Frequentist class 
    from pyab.experiments import ABTestFrequentist
 
+   # provide significance rate and type of test
    ad_experiment = ABTestFrequentist(alpha=0.05, alt_hypothesis='one_tailed')
 
+   # conduct experiment with two variants successes and trials, returns stat & pvalue
    stat, pvalue = ad_experiment.conduct_experiment(success_null=100, trials_null=1000, 
-                                 success_alt=125, trials_alt=1000)
+                                    success_alt=125, trials_alt=1000)
 
 License:
 -------

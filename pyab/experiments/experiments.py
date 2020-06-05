@@ -283,8 +283,19 @@ class ABTestFrequentist:
         if self.pvalue < self.alpha:
             is_significant = True
 
-        print("pyAB Summary")
-        print("============\n")
+        print("pyAB Summary\n============\n")
+        print("Test Parameters\n_______________\n")
+        print("Variant A: Success Rate %s, Sample Size %s" %(self.prop_null, self.trials_null))
+        print("Variant B: Success Rate %s, Sample Size %s" %(self.prop_alt, self.trials_alt))
+        print("Type-I Error: %s, %s test\n" %(self.alpha, self.alt_hypothesis))
+        print("Test Results\n____________\n")
+        if is_significant:
+            print("There is a statistically significant difference in proportions of two variants\n")
+        else:
+            print("There is no statistically significant difference in proportions of two variants\n")
+        print("Test Stat: %s" % (np.round(self.stat, 3)))
+        print("p-value: %s" % (np.round(self.pvalue, 3)))
+        print("Type-II Error: %s" % (np.round(self.beta, 3)))
 
     def plot_power_curve(self, figsize=(9, 6)):
         """
