@@ -41,6 +41,10 @@ pyAB has the following dependencies:
 - scipy
 - statsmodels
 
+Documentation:
+-------------
+
+pyAB documentation is available at https://pyab.readthedocs.io/en/latest/
 
 License:
 -------
