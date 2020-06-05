@@ -48,8 +48,16 @@ pyAB documentation is available at `pyab.readthedocs.io <https://pyab.readthedoc
 
 
 Quick Start:
--------------
+------------
 
+.. code:: python
+
+   from pyab.experiments import ABTestFrequentist
+
+   ad_experiment = ABTestFrequentist(alpha=0.05, alt_hypothesis='one_tailed')
+
+   stat, pvalue = ad_experiment.conduct_experiment(success_null=100, trials_null=1000, 
+                                 success_alt=125, trials_alt=1000)
 
 License:
 -------
