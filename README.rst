@@ -44,7 +44,7 @@ pyAB has the following dependencies:
 Documentation:
 -------------
 
-pyAB documentation is available at pyab.readthedocs.io & pyab.rtfd.io
+pyAB documentation is available at `pyab.readthedocs.io <https://pyab.readthedocs.io/en/latest/>` & pyab.rtfd.io
 
 License:
 -------
