@@ -35,10 +35,8 @@ Dependencies:
 
 pyAB has the following dependencies:
 
-.. sourcecode::
-
-   numpy
-   matplotlib
-   seaborn
-   scipy
-   statsmodels
+- numpy
+- matplotlib
+- seaborn
+- scipy
+- statsmodels
