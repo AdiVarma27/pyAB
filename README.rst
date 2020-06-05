@@ -12,7 +12,7 @@ Features:
 --------
 - Conduct quick experiments to check for winning variant (statistical significance).
 - Visualize & inspect power curve for varying alternative proportions.
-- Estimate required sample size to reach required significance levels.
+- Estimate required sample size to reach required Type-II error rate.
 
 Installation:
 ------------
