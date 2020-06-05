@@ -40,3 +40,10 @@ pyAB has the following dependencies:
 - seaborn
 - scipy
 - statsmodels
+
+
+License:
+-------
+
+MIT License_.
+.. _MIT License: https://github.com/AdiVarma27/pyAB/blob/master/LICENSE
