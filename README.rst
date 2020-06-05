@@ -4,4 +4,7 @@
   
 pyAB
 ====
-A/B Testing using Frequentist & Bayesian Statistics
+pyAB is a Python package for A/B Testing using Frequentist & Bayesian methodologies.
+
+Features:
+========
