@@ -29,3 +29,12 @@ To install from source, use the following Github link
    git clone https://github.com/AdiVarma27/pyAB.git
    cd pyAB
    python setup.py install
+
+Dependencies:
+------------
+pyAB has the following dependencies:
+- numpy
+- matplotlib
+- seaborn
+- scipy
+- statsmodels
