@@ -16,7 +16,7 @@ Features:
 
 Installation:
 ------------
-Install pyAB by using the following PyPI link
+Best way to install pyAB is through pip
 
 .. code:: python
 
@@ -45,6 +45,8 @@ Documentation:
 -------------
 
 pyAB documentation is available at `pyab.readthedocs.io <https://pyab.readthedocs.io/en/latest/>`_ & `pyab.rtfd.io <https://pyab.rtfd.io/en/latest/>`_.
+
+
 
 License:
 -------
