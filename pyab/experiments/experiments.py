@@ -137,18 +137,18 @@ class ABTestFrequentist:
 
         self.stat = self.calculate_stat(self.prop_alt)
 
-        self.t_test = True if check_t_test(trials_null, trials_alt) else False
+        self.is_t_test = True if check_t_test(trials_null, trials_alt) else False
 
         # check for alt hypothesis
         if self.alt_hypothesis == 'one_tailed':
 
             # check if t-test
-            if self.t_test:
+            if self.is_t_test:
                 if self.right_tailed_flag:
-                    pvalue = st.t.cdf(-self.stat,
+                    self.pvalue = st.t.cdf(-self.stat,
                                       df=trials_null + trials_alt - 2)
                 else:
-                    pvalue = st.t.cdf(
+                    self.pvalue = st.t.cdf(
                         self.stat, df=trials_null + trials_alt - 2)
 
                 self.stat_null_crit_lower = st.t.ppf(self.alpha)
@@ -157,9 +157,9 @@ class ABTestFrequentist:
             # if not t-test
             else:
                 if self.right_tailed_flag:
-                    pvalue = st.norm.cdf(-self.stat)
+                    self.pvalue = st.norm.cdf(-self.stat)
                 else:
-                    pvalue = st.norm.cdf(self.stat)
+                    self.pvalue = st.norm.cdf(self.stat)
 
                 self.stat_null_crit_lower = st.norm.ppf(self.alpha)
                 self.stat_null_crit_upper = st.norm.ppf(1 - self.alpha)
@@ -195,12 +195,12 @@ class ABTestFrequentist:
         # if two-tailed
         else:
             # check if t-test
-            if self.t_test:
+            if self.is_t_test:
                 if self.right_tailed_flag:
-                    pvalue = st.t.cdf(-self.stat,
+                    self.pvalue = st.t.cdf(-self.stat,
                                       df=trials_null + trials_alt - 2) * 2
                 else:
-                    pvalue = st.t.cdf(
+                    self.pvalue = st.t.cdf(
                         self.stat, df=trials_null + trials_alt - 2) * 2
 
                 self.stat_null_crit_lower = st.t.ppf(self.alpha / 2)
@@ -209,9 +209,9 @@ class ABTestFrequentist:
             # if not t-test
             else:
                 if self.right_tailed_flag:
-                    pvalue = st.norm.cdf(-self.stat) * 2
+                    self.pvalue = st.norm.cdf(-self.stat) * 2
                 else:
-                    pvalue = st.norm.cdf(self.stat) * 2
+                    self.pvalue = st.norm.cdf(self.stat) * 2
 
                 self.stat_null_crit_lower = st.norm.ppf(self.alpha / 2)
                 self.stat_null_crit_upper = st.norm.ppf(1 - self.alpha / 2)
@@ -240,7 +240,9 @@ class ABTestFrequentist:
                     for temp_moving_prop in np.arange(0, 1.005, 0.005)
                 }
 
-        return self.stat, pvalue
+        self.print_freq_results()
+
+        return self.stat, self.pvalue
 
     def get_sample_size(self, beta=0.1):
         """
@@ -271,6 +273,18 @@ class ABTestFrequentist:
             )
 
         return n
+
+    def print_freq_results(self):
+        """
+        Print Frequentist Experiment Results
+        """
+        is_significant = False
+
+        if self.pvalue < self.alpha:
+            is_significant = True
+
+        print("pyAB Summary")
+        print("============\n")
 
     def plot_power_curve(self, figsize=(9, 6)):
         """
