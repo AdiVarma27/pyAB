@@ -88,6 +88,9 @@ Output:
    p-value: 0.038
    Type-II Error: 0.451
 
+.. image:: img/fig1powercurve.png
+
+
 
 License:
 -------

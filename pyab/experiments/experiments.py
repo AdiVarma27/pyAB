@@ -297,6 +297,8 @@ class ABTestFrequentist:
         print("p-value: %s" % (np.round(self.pvalue, 3)))
         print("Type-II Error: %s" % (np.round(self.beta, 3)))
 
+        self.plot_power_curve()
+
     def plot_power_curve(self, figsize=(9, 6)):
         """
         Plot power curve for provided experiment parameters.
@@ -323,8 +325,10 @@ class ABTestFrequentist:
         plot_power_curve_proportion = power_curve_ind[plot_power_curve_ind]
 
         plt.figure(figsize=figsize)
+        plt.title("Power Curve")
         sns.lineplot(plot_power_curve_proportion, plot_power_curve_values)
-        plt.scatter(self.prop_alt, 1 - self.beta)
+        plt.scatter(self.prop_alt, 1 - self.beta, label='Power at alternate proportion %s' %(str(np.round(1-self.beta,3))))
+        plt.legend()
         plt.xlabel("Comparison Proportion")
         plt.ylabel("Power")
         plt.grid()
