@@ -45,4 +45,4 @@ pyAB has the following dependencies:
 License:
 -------
 
-`MIT License <https://github.com/AdiVarma27/pyAB/blob/master/LICENSE>`_
+`MIT License Copyright (c) 2020 <https://github.com/AdiVarma27/pyAB/blob/master/LICENSE>`_
