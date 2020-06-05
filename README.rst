@@ -21,3 +21,11 @@ Install pyAB by using the following PyPI link
 .. code:: python
 
    pip install pyAB
+
+To install from source, use the following Github link
+
+.. code:: python
+
+   git clone https://github.com/AdiVarma27/pyAB.git
+   cd pyAB
+   python setup.py install
