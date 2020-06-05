@@ -50,6 +50,8 @@ pyAB documentation is available at `pyab.readthedocs.io <https://pyab.readthedoc
 Quick Start:
 ------------
 
+Example Code Snippet:
+
 .. code:: python
 
    # import Frequentist class 
@@ -61,6 +63,31 @@ Quick Start:
    # conduct experiment with two variants successes and trials, returns stat & pvalue
    stat, pvalue = ad_experiment.conduct_experiment(success_null=100, trials_null=1000, 
                                     success_alt=125, trials_alt=1000)
+
+
+Output:
+
+.. sourcecode::
+
+   pyAB Summary
+   ============
+
+   Test Parameters
+   _______________
+
+   Variant A: Success Rate 0.1, Sample Size 1000
+   Variant B: Success Rate 0.125, Sample Size 1000
+   Type-I Error: 0.05, one_tailed test
+
+   Test Results
+   ____________
+
+   There is a statistically significant difference in proportions of two variants
+
+   Test Stat: 1.769
+   p-value: 0.038
+   Type-II Error: 0.451
+
 
 License:
 -------
