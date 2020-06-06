@@ -9,6 +9,100 @@ import statsmodels.stats.api as sms
 from statsmodels.stats.power import tt_ind_solve_power
 from pyab.utils import check_data_input, check_t_test
 
+class ABTestBayesian:
+    def __init__(self, success_prior, trials_prior):
+    
+        self.success_prior = success_prior
+        self.trials_prior = trials_prior
+        self.faliure_prior = self.trials_prior - self.success_prior
+
+    def conduct_experiment(self, success_null, trials_null, success_alt, trials_alt, n_trials = 1000, uplift_method='uplift_percent'):
+        
+        all_uplift_methods = ['uplift_percent', 'uplift_ratio', 'uplift_difference']
+        if uplift_method not in all_uplift_methods:
+            raise ValueError(
+                "ABTestBayesian class supports uplift methods in %s, got %s"
+                % (all_uplift_methods, uplift_method)
+            )
+
+        self.n_trials = n_trials
+        self.uplift_method = uplift_method
+
+        check_data_input(success_null, trials_null)
+        check_data_input(success_alt, trials_alt)
+
+        self.n_trials = n_trials
+
+        self.success_null = success_null
+        self.trials_null = trials_null
+
+        self.success_alt = success_alt
+        self.trials_alt = trials_alt
+
+        faliure_null = self.trials_null - self.success_null
+        faliure_alt = self.trials_alt - self.success_alt
+
+        self.success_posterior_null = self.success_prior + self.success_null
+        self.faliure_posterior_null = self.faliure_prior + faliure_null
+
+        self.success_posterior_alt = self.success_prior + self.success_alt
+        self.faliure_posterior_alt = self.faliure_prior + faliure_alt
+
+        beta_x = np.arange(0,1.005,0.005)
+        beta_prior_pdf = st.beta.pdf(beta_x, self.success_prior, self.faliure_prior)
+        beta_null_pdf = st.beta.pdf(beta_x, self.success_posterior_null, self.faliure_posterior_null)
+        beta_alt_pdf = st.beta.pdf(beta_x, self.success_posterior_alt, self.faliure_posterior_alt)
+
+
+        self.beta_mcmc_null = st.beta.rvs(self.success_posterior_null, self.faliure_posterior_null, size=self.n_trials)
+        self.beta_mcmc_alt = st.beta.rvs(self.success_posterior_alt, self.faliure_posterior_alt, size=self.n_trials)
+
+        if self.uplift_method == 'uplift_percent':
+            self.uplift_distribution= (self.beta_mcmc_alt - self.beta_mcmc_null)/self.beta_mcmc_alt
+        elif self.uplift_method == 'uplift_ratio':
+            self.uplift_distribution = self.beta_mcmc_alt/self.beta_mcmc_null
+        elif self.uplift_method == 'uplift_difference':
+            self.uplift_distribution = self.beta_mcmc_alt - self.beta_mcmc_null
+
+        self.print_bayesian_results()
+
+    def print_bayesian_results(self):
+        """
+        Print Bayesian Experiment Results
+        """
+
+        print("pyAB Summary\n============\n")
+        print("Test Parameters\n_______________\n")
+        print("Variant A: Successful Trials %s, Sample Size %s" %(self.success_null, self.trials_null))
+        print("Variant B: Successful Trials %s, Sample Size %s" %(self.success_alt, self.trials_alt))
+        print("Prior: Successful Trials %s, Sample Size %s\n" %(self.success_prior, self.trials_prior))
+        print("Test Results\n____________\n")
+
+
+        self.plot_uplift_distribution()
+        
+    def plot_uplift_distribution(self, figsize=(18,6)):
+        
+        plt.figure(figsize=figsize)
+
+        plt.subplot(1, 2, 1)
+        plt.title("Uplift Distribution Plot")
+        sns.distplot(self.uplift_distribution)
+        plt.xlabel("Uplift")
+        plt.ylabel("Density")
+        plt.grid()
+
+        plt.subplot(1, 2, 2)
+        plt.title("Uplift Cumulative Distribution Plot")
+        kwargs={'cumulative': True}
+        sns.distplot(self.uplift_distribution, hist_kws=kwargs, kde_kws=kwargs, norm_hist=True, kde=False, color='orange')
+        plt.xlabel("Cumulative Uplift")
+        plt.ylabel("Density")
+        plt.grid()
+
+        plt.show()
+
+
 
 class ABTestFrequentist:
     """
@@ -305,7 +399,7 @@ class ABTestFrequentist:
 
         Parameters
         ----------
-        figsize : tuple, default = (12,8)
+        figsize : tuple, default = (9,6)
             matplotlib plot size.
         """
         power_curve_ind, power_curve_values = (

@@ -1,3 +1,3 @@
-from .experiments import ABTestFrequentist
+from .experiments import ABTestFrequentist, ABTestBayesian
 
-__all__ = [ABTestFrequentist]
+__all__ = [ABTestFrequentist, ABTestBayesian]
