@@ -50,6 +50,8 @@ pyAB documentation is available at `pyab.readthedocs.io <https://pyab.readthedoc
 Quick Start:
 ------------
 
+
+
 Example Code Snippet:
 
 .. code:: python
@@ -91,6 +93,10 @@ Output:
 .. image:: img/fig1powercurve.png
 
 
+.. code:: python
+   
+   # required sample size per variant for given beta
+   ad_experiment.get_sample_size(beta=0.1)
 
 License:
 -------
