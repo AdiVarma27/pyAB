@@ -52,7 +52,7 @@ Quick Start:
 
 
 
-Example Code Snippet:
+Code Snippet:
 
 .. code:: python
 
@@ -92,6 +92,8 @@ Output:
 
 .. image:: img/fig1powercurve.png
 
+
+Code Snippet:
 
 .. code:: python
    
