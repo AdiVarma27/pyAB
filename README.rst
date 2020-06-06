@@ -14,8 +14,8 @@ Features:
 * Frequentist A/B Test:
   --------------------
   - Conduct quick experiments to check for winning variant (statistical significance).
-  - Estimate required sample size per variant to reach expected Type-II error rate.
   - Visualize & inspect power curve for varying alternative proportions.
+  - Estimate required sample size per variant to reach expected Type-II error rate.
 
 * Bayesian A/B Test:
   -----------------
