@@ -76,7 +76,7 @@ class ABTestBayesian:
         print("Variant A: Successful Trials %s, Sample Size %s" %(self.success_null, self.trials_null))
         print("Variant B: Successful Trials %s, Sample Size %s" %(self.success_alt, self.trials_alt))
         print("Prior: Successful Trials %s, Sample Size %s\n" %(self.success_prior, self.trials_prior))
-        print("Test Results\n____________\n")
+        print("Test Result Inference\n____________\n")
 
 
         self.plot_uplift_distribution()
