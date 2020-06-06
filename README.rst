@@ -13,13 +13,13 @@ Features:
 Frequentist A/B Test:
 --------------------
 - Conduct quick experiments to check for winning variant (statistical significance).
-- Visualize & inspect power curve for varying alternative proportions.
 - Estimate required sample size per variant to reach expected Type-II error rate.
+- Visualize & inspect power curve for varying alternative proportions.
 
 Bayesian A/B Test:
 -----------------
 - Conduct quick experiments to check for winning variant using Beta Distribution.
-- Try different evaluation metrics (Uplift Ratio, Difference & Percent Gain) & vary MCMC simulation sample size per variant
+- Try different evaluation metrics (Uplift Ratio, Difference & Percent Gain) & vary MCMC simulation sample size per variant.
 - Visualize & inspect Uplift Density & Cumulative Density distributions.
 
 Installation:
