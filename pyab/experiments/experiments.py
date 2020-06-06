@@ -109,7 +109,7 @@ class ABTestFrequentist:
             number of successful clicks or successful events (Version-A).
 
         trials_null : int
-            number of impressions or events (Version-A)
+            number of impressions or events (Version-A).
 
         success_alt : int
             number of successful clicks or successful events (Version-B).
@@ -255,7 +255,7 @@ class ABTestFrequentist:
 
         Returns
         -------
-        n : float
+        n : int
             sample size per group.
         """
         es = sms.proportion_effectsize(self.prop_null, self.prop_alt)
