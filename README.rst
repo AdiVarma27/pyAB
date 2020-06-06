@@ -98,6 +98,12 @@ Output:
    # required sample size per variant for given beta
    ad_experiment.get_sample_size(beta=0.1)
 
+Output:
+
+.. sourcecode::
+
+   2729
+
 License:
 -------
 

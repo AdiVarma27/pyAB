@@ -272,7 +272,7 @@ class ABTestFrequentist:
                 effect_size=es, alpha=self.alpha, power=1 - beta, alternative='smaller'
             )
 
-        return n
+        return int(np.round(n,0))
 
     def print_freq_results(self):
         """
