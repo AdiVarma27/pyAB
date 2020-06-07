@@ -453,8 +453,8 @@ class ABTestBayesian:
         print("Variant B: Successful Trials %s, Sample Size %s" %(self.success_alt, self.trials_alt))
         print("Prior: Successful Trials %s, Sample Size %s\n" %(self.success_prior, self.trials_prior))
         print("Test Results\n____________\n")
-        print("Samples per group for mcmc simulation: %s" %(self.n_trials))
         print("Evaluation Metric: %s\n" %(self.uplift_method))
+        print("Samples per group for mcmc simulation: %s" %(self.n_trials))
 
         if self.uplift_method == 'uplift_percent':
             print("%s %% simulations show Uplift Gain Percent above 0.\n"% (np.round(self.uplift_area*100, 2)))
