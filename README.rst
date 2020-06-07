@@ -55,8 +55,6 @@ Documentation:
 pyAB documentation is available at `pyab.readthedocs.io <https://pyab.readthedocs.io/en/latest/>`_ & `pyab.rtfd.io <https://pyab.rtfd.io/en/latest/>`_.
 
 
-Quick Start:
-------------
 ====
 **Bayesian A/B Test:**
 ====
@@ -148,6 +146,9 @@ Output:
 
 .. image:: img/fig1.png
 
+|
+Given that the current Type-II error is 0.451 at 1000 samples per variant, we can find out required sample size per variant to reach Type-II error of 0.1.
+|
 
 Code Snippet:
 
