@@ -7,7 +7,7 @@
 ========
 pyAB is a Python package for Bayesian & Frequentist A/B Testing.
 
-|
+
 Features:
 --------
 Bayesian A/B Test:
@@ -145,11 +145,9 @@ Output:
 
 .. image:: img/fig1.png
 
-|
-Given that the current Type-II error is 0.451 at 1000 samples per variant, we can find out required sample size per variant to reach Type-II error of 0.1.
-|
 
-Code Snippet:
+Given that the current Type-II error is 0.451 at 1000 samples per variant, we can find out required sample size per variant to reach Type-II error of 0.1.
+
 
 .. code:: python
    
