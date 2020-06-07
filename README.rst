@@ -2,9 +2,9 @@
   :target: https://pyab.readthedocs.io/en/latest/?badge=latest
   :alt: Documentation Status
  
-====
-pyAB
-====
+========
+**pyAB**
+========
 pyAB is a Python package for Bayesian & Frequentist A/B Testing.
 
 
@@ -56,7 +56,7 @@ pyAB documentation is available at `pyab.readthedocs.io <https://pyab.readthedoc
 
 
 ====
-**Bayesian A/B Test:**
+Bayesian A/B Test:
 ====
 **Let us assume we have two Banner Ads with 10% & 12.5% Click-through-rates. Let us run a Bayesian A/B Test to look at expected Uplift Ratio.**
 
@@ -99,7 +99,7 @@ Output:
 
 .. image:: img/fig2.png
 ====
-**Frequentist A/B Test:**
+Frequentist A/B Test:
 ====
 **Let us now run a Frequentist A/B Test and verify if there is a significant difference between two proportions provided the sample sizes and Type-I Error rate.**
 
