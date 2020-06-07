@@ -62,7 +62,7 @@ Quick Start:
 
 **Let us assume we have two Banner Ads with 10% & 12.5% Click-through-rates. Let us run a Bayesian A/B Test to look at expected Uplift Ratio.**
 
-Code Snippet:
+
 
 .. code:: python
 
@@ -107,7 +107,7 @@ Output:
 **Let us now run a Frequentist A/B Test and verify if there is a significant difference between two proportions provided the sample sizes and Type-I Error rate.**
 
 
-Code Snippet:
+
 
 .. code:: python
 
