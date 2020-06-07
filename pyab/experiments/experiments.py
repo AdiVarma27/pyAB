@@ -288,14 +288,14 @@ class ABTestFrequentist:
         print("Variant B: Success Rate %s, Sample Size %s" %(self.prop_alt, self.trials_alt))
         print("Type-I Error: %s, %s test\n" %(self.alpha, self.alt_hypothesis))
         print("Test Results\n____________\n")
-        if is_significant:
-            print("There is a statistically significant difference in proportions of two variants.\n")
-        else:
-            print("There is no statistically significant difference in proportions of two variants.\n")
         print("Test Stat: %s" % (np.round(self.stat, 3)))
         print("p-value: %s" % (np.round(self.pvalue, 3)))
         print("Type-II Error: %s" % (np.round(self.beta, 3)))
         print("Power: %s\n" % (np.round(1-self.beta, 3)))
+        if is_significant:
+            print("There is a statistically significant difference in proportions of two variants.\n")
+        else:
+            print("There is no statistically significant difference in proportions of two variants.\n")
 
         self.plot_power_curve()
 
@@ -353,7 +353,7 @@ class ABTestBayesian:
         self.trials_prior = trials_prior
         self.faliure_prior = self.trials_prior - self.success_prior
 
-    def conduct_experiment(self, success_null, trials_null, success_alt, trials_alt, uplift_method='uplift_percent', n_trials = 1000):
+    def conduct_experiment(self, success_null, trials_null, success_alt, trials_alt, uplift_method='uplift_percent', num_simulations = 1000):
         """
         Conduct experiment & generate uplift pdf & cdf with provided parameters.
 
@@ -371,8 +371,8 @@ class ABTestBayesian:
         trials_alt : int
             Number of trials for variant-b.
 
-        n_trials : int
-            Number of samples per group for mcmc simulation
+        num_simulations : int
+            Number of mcmc simulations.
 
         uplift_method : str, default = 'uplift_percent'
             Uplift evaluation metric.
@@ -391,13 +391,12 @@ class ABTestBayesian:
                 % (all_uplift_methods, uplift_method)
             )
 
-        self.n_trials = n_trials
+        self.num_simulations = num_simulations
         self.uplift_method = uplift_method
 
         check_data_input(success_null, trials_null)
         check_data_input(success_alt, trials_alt)
 
-        self.n_trials = n_trials
 
         self.success_null = success_null
         self.trials_null = trials_null
@@ -435,8 +434,8 @@ class ABTestBayesian:
         uplift_area : float
             percentage area above threshold.
         """
-        beta_mcmc_null = st.beta.rvs(self.success_posterior_null, self.faliure_posterior_null, size=self.n_trials)
-        beta_mcmc_alt = st.beta.rvs(self.success_posterior_alt, self.faliure_posterior_alt, size=self.n_trials)
+        beta_mcmc_null = st.beta.rvs(self.success_posterior_null, self.faliure_posterior_null, size=self.num_simulations)
+        beta_mcmc_alt = st.beta.rvs(self.success_posterior_alt, self.faliure_posterior_alt, size=self.num_simulations)
 
         if self.uplift_method == 'uplift_percent':
             uplift_distribution= (beta_mcmc_alt - beta_mcmc_null)/beta_mcmc_null
@@ -464,8 +463,8 @@ class ABTestBayesian:
         print("Variant B: Successful Trials %s, Sample Size %s" %(self.success_alt, self.trials_alt))
         print("Prior: Successful Trials %s, Sample Size %s\n" %(self.success_prior, self.trials_prior))
         print("Test Results\n____________\n")
-        print("Evaluation Metric: %s\n" %(self.uplift_method))
-        print("Number of mcmc simulation: %s" %(self.n_trials))
+        print("Evaluation Metric: %s" %(self.uplift_method))
+        print("Number of mcmc simulations: %s\n" %(self.num_simulations))
 
         if self.uplift_method == 'uplift_percent':
             print("%s %% simulations show Uplift Gain Percent above 0.\n"% (np.round(self.uplift_area*100, 2)))
