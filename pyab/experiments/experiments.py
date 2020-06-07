@@ -353,7 +353,7 @@ class ABTestBayesian:
         self.trials_prior = trials_prior
         self.faliure_prior = self.trials_prior - self.success_prior
 
-    def conduct_experiment(self, success_null, trials_null, success_alt, trials_alt, n_trials = 1000, uplift_method='uplift_percent'):
+    def conduct_experiment(self, success_null, trials_null, success_alt, trials_alt, uplift_method='uplift_percent', n_trials = 1000):
         """
         Conduct experiment & generate uplift pdf & cdf with provided parameters.
 
@@ -424,6 +424,17 @@ class ABTestBayesian:
         self.print_bayesian_results()
 
     def calculate_uplift_area(self):
+        """
+        Calculate Uplift pdf & area beyond threshold with provided test parameters.
+
+        Returns
+        -------
+        uplift_distribution : ndarray
+            uplift distribution based on chosen uplift method.
+
+        uplift_area : float
+            percentage area above threshold.
+        """
         beta_mcmc_null = st.beta.rvs(self.success_posterior_null, self.faliure_posterior_null, size=self.n_trials)
         beta_mcmc_alt = st.beta.rvs(self.success_posterior_alt, self.faliure_posterior_alt, size=self.n_trials)
 
