@@ -6,6 +6,10 @@
   :target: https://github.com/AdiVarma27/pyAB/blob/master/LICENSE
   :alt: Documentation Status
 
+.. image:: https://img.shields.io/pypi/pyversions/pyAB
+  :target: https://github.com/AdiVarma27/pyAB/blob/master/LICENSE
+  :alt: Documentation Status
+
 .. image:: https://img.shields.io/github/stars/AdiVarma27/pyAB?logo=Github 
   :target: https://github.com/AdiVarma27/pyAB
   :alt: Documentation Status
