@@ -75,7 +75,6 @@ pyAB documentation is available at `pyab.readthedocs.io <https://pyab.readthedoc
                                              success_alt=125, trials_alt=1000, 
                                              uplift_method='uplift_ratio', num_simulations=1000)
 
-
 Output:
 
 .. sourcecode::
@@ -118,7 +117,6 @@ Output:
    # conduct experiment with two variants successes and trials, returns stat & pvalue
    stat, pvalue = ad_experiment_freq.conduct_experiment(success_null=100, trials_null=1000, 
                                     success_alt=125, trials_alt=1000)
-
 
 Output:
 
