@@ -289,9 +289,9 @@ class ABTestFrequentist:
         print("Type-I Error: %s, %s test\n" %(self.alpha, self.alt_hypothesis))
         print("Test Results\n____________\n")
         if is_significant:
-            print("There is a statistically significant difference in proportions of two variants\n")
+            print("There is a statistically significant difference in proportions of two variants.\n")
         else:
-            print("There is no statistically significant difference in proportions of two variants\n")
+            print("There is no statistically significant difference in proportions of two variants.\n")
         print("Test Stat: %s" % (np.round(self.stat, 3)))
         print("p-value: %s" % (np.round(self.pvalue, 3)))
         print("Type-II Error: %s" % (np.round(self.beta, 3)))
@@ -465,7 +465,7 @@ class ABTestBayesian:
         print("Prior: Successful Trials %s, Sample Size %s\n" %(self.success_prior, self.trials_prior))
         print("Test Results\n____________\n")
         print("Evaluation Metric: %s\n" %(self.uplift_method))
-        print("Samples per group for mcmc simulation: %s" %(self.n_trials))
+        print("Number of mcmc simulation: %s" %(self.n_trials))
 
         if self.uplift_method == 'uplift_percent':
             print("%s %% simulations show Uplift Gain Percent above 0.\n"% (np.round(self.uplift_area*100, 2)))
