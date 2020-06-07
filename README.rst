@@ -71,7 +71,7 @@ Code Snippet:
    # conduct experiment with two variants successes and trials, along with uplift method and number of simulations
    ad_experiment_bayesian.conduct_experiment(success_null=100, trials_null=1000, 
                                              success_alt=125, trials_alt=1000, 
-                                             uplift_method='uplift_ratio', num_simulations=100)
+                                             uplift_method='uplift_ratio', num_simulations=1000)
 
 
 Output:
@@ -92,9 +92,9 @@ Output:
    ____________
 
    Evaluation Metric: uplift_ratio
-   Number of mcmc simulations: 100
+   Number of mcmc simulations: 1000
 
-   96.55 % simulations show Uplift Ratio above 1.
+   90.33 % simulations show Uplift Ratio above 1.
 
 .. image:: img/fig2.png
 
