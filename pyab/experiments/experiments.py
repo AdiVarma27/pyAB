@@ -1,6 +1,5 @@
 """Main file comprising Frequentist & Bayesian A/B Testing methods."""
 
-
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns

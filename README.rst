@@ -1,7 +1,10 @@
 .. image:: https://readthedocs.org/projects/pyab/badge/?version=latest
   :target: https://pyab.readthedocs.io/en/latest/?badge=latest
   :alt: Documentation Status
- 
+
+.. image:: https://img.shields.io/github/license/AdiVarma27/pyab
+  :target: https://github.com/AdiVarma27/pyAB/blob/master/LICENSE
+  :alt: Documentation Status
 ========
 **pyAB**
 ========
