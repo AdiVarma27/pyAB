@@ -5,22 +5,22 @@
 ====
 pyAB
 ====
-pyAB is a Python package for Frequentist & Bayesian A/B Testing.
+pyAB is a Python package for Bayesian & Frequentist A/B Testing.
 
 
 Features:
 --------
-Frequentist A/B Test:
---------------------
-- Conduct quick experiments to check for winning variant (Statistical significance).
-- Estimate required sample size per variant to reach expected Type-II error rate.
-- Visualize & inspect power curve for varying alternative proportions.
-
 Bayesian A/B Test:
 -----------------
 - Conduct quick experiments to check for winning variant with additional prior information (Beta Distribution parameters).
 - Try different evaluation metrics (Uplift Ratio, Difference & Percent Gain) & vary MCMC simulation sample size per variant.
 - Visualize & inspect Uplift Density & Cumulative Density distributions.
+
+Frequentist A/B Test:
+--------------------
+- Conduct quick experiments to check for winning variant (Statistical significance).
+- Estimate required sample size per variant to reach expected Type-II error rate.
+- Visualize & inspect power curve for varying alternative proportions.
 
 Installation:
 ------------
@@ -58,6 +58,45 @@ pyAB documentation is available at `pyab.readthedocs.io <https://pyab.readthedoc
 Quick Start:
 ------------
 
+Code Snippet:
+
+.. code:: python
+
+   # import Bayesian class
+   from pyab.experiments import ABTestBayesian
+
+   # provide beta priors
+   ad_experiment_bayesian = ABTestBayesian(success_prior=120, trials_prior=1000)
+
+   # conduct experiment with two variants successes and trials, along with uplift method and number of simulations
+   ad_experiment_bayesian.conduct_experiment(success_null=100, trials_null=1000, 
+                                             success_alt=125, trials_alt=1000, 
+                                             uplift_method='uplift_ratio', num_simulations=100)
+
+
+Output:
+
+.. sourcecode::
+
+   pyAB Summary
+   ============
+
+   Test Parameters
+   _______________
+
+   Variant A: Successful Trials 100, Sample Size 1000
+   Variant B: Successful Trials 125, Sample Size 1000
+   Prior: Successful Trials 120, Sample Size 1000
+
+   Test Results
+   ____________
+
+   Evaluation Metric: uplift_ratio
+   Number of mcmc simulations: 100
+
+   96.55 % simulations show Uplift Ratio above 1.
+
+.. image:: img/fig2.png
 
 
 Code Snippet:
@@ -114,47 +153,6 @@ Output:
 .. sourcecode::
 
    2729
-
-
-Code Snippet:
-
-.. code:: python
-
-   # import Bayesian class
-   from pyab.experiments import ABTestBayesian
-
-   # provide beta priors
-   ad_experiment_bayesian = ABTestBayesian(success_prior=120, trials_prior=1000)
-
-   # conduct experiment with two variants successes and trials, along with uplift method and number of simulations
-   ad_experiment_bayesian.conduct_experiment(success_null=100, trials_null=1000, 
-                                             success_alt=125, trials_alt=1000, 
-                                             uplift_method='uplift_ratio', num_simulations=100)
-
-
-Output:
-
-.. sourcecode::
-
-   pyAB Summary
-   ============
-
-   Test Parameters
-   _______________
-
-   Variant A: Successful Trials 100, Sample Size 1000
-   Variant B: Successful Trials 125, Sample Size 1000
-   Prior: Successful Trials 120, Sample Size 1000
-
-   Test Results
-   ____________
-
-   Evaluation Metric: uplift_ratio
-   Number of mcmc simulations: 100
-
-   96.55 % simulations show Uplift Ratio above 1.
-
-.. image:: img/fig2.png
 
 
 License:
