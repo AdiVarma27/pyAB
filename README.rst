@@ -7,9 +7,9 @@
 ========
 pyAB is a Python package for Bayesian & Frequentist A/B Testing.
 
-
+========
 Features:
---------
+========
 Bayesian A/B Test:
 -----------------
 - Conduct quick experiments to check for winning variant with additional prior information (Beta Distribution parameters).
@@ -22,8 +22,9 @@ Frequentist A/B Test:
 - Estimate required sample size per variant to reach expected Type-II error rate.
 - Visualize & inspect power curve for varying alternative proportions.
 
+============
 Installation:
-------------
+============
 Best way to install pyAB is through pip
 
 .. code:: python
@@ -38,8 +39,9 @@ To install from source, use the following Github link
    cd pyAB
    python setup.py install
 
+============
 Dependencies:
-------------
+============
 
 pyAB has the following dependencies:
 
@@ -49,15 +51,15 @@ pyAB has the following dependencies:
 - scipy
 - statsmodels
 
+=============
 Documentation:
--------------
+=============
 
 pyAB documentation is available at `pyab.readthedocs.io <https://pyab.readthedocs.io/en/latest/>`_ & `pyab.rtfd.io <https://pyab.rtfd.io/en/latest/>`_.
 
-|
-====
+=================
 Bayesian A/B Test:
-====
+=================
 **Let us assume we have two Banner Ads with 10% & 12.5% Click-through-rates. Let us run a Bayesian A/B Test to look at expected Uplift Ratio.**
 
 
@@ -99,9 +101,9 @@ Output:
 
 .. image:: img/fig2.png
 |
-====
+====================
 Frequentist A/B Test:
-====
+====================
 **Let us now run a Frequentist A/B Test and verify if there is a significant difference between two proportions provided the sample sizes and Type-I Error rate.**
 
 
@@ -160,8 +162,8 @@ Output:
 
    2729
 
-
+=======
 License:
--------
+=======
 
 `MIT License Copyright (c) 2020 <https://github.com/AdiVarma27/pyAB/blob/master/LICENSE>`_
