@@ -295,6 +295,7 @@ class ABTestFrequentist:
         print("Test Stat: %s" % (np.round(self.stat, 3)))
         print("p-value: %s" % (np.round(self.pvalue, 3)))
         print("Type-II Error: %s" % (np.round(self.beta, 3)))
+        print("Power: %s\n" % (np.round(1-self.beta, 3)))
 
         self.plot_power_curve()
 
@@ -418,18 +419,28 @@ class ABTestBayesian:
         beta_null_pdf = st.beta.pdf(beta_x, self.success_posterior_null, self.faliure_posterior_null)
         beta_alt_pdf = st.beta.pdf(beta_x, self.success_posterior_alt, self.faliure_posterior_alt)
 
-
-        self.beta_mcmc_null = st.beta.rvs(self.success_posterior_null, self.faliure_posterior_null, size=self.n_trials)
-        self.beta_mcmc_alt = st.beta.rvs(self.success_posterior_alt, self.faliure_posterior_alt, size=self.n_trials)
-
-        if self.uplift_method == 'uplift_percent':
-            self.uplift_distribution= (self.beta_mcmc_alt - self.beta_mcmc_null)/self.beta_mcmc_alt
-        elif self.uplift_method == 'uplift_ratio':
-            self.uplift_distribution = self.beta_mcmc_alt/self.beta_mcmc_null
-        elif self.uplift_method == 'uplift_difference':
-            self.uplift_distribution = self.beta_mcmc_alt - self.beta_mcmc_null
+        self.uplift_distribution, self.uplift_area = self.calculate_uplift_area()
 
         self.print_bayesian_results()
+
+    def calculate_uplift_area(self):
+        beta_mcmc_null = st.beta.rvs(self.success_posterior_null, self.faliure_posterior_null, size=self.n_trials)
+        beta_mcmc_alt = st.beta.rvs(self.success_posterior_alt, self.faliure_posterior_alt, size=self.n_trials)
+
+        if self.uplift_method == 'uplift_percent':
+            uplift_distribution= (beta_mcmc_alt - beta_mcmc_null)/beta_mcmc_null
+            uplift_area = uplift_distribution[uplift_distribution >= 0].sum()/np.abs(uplift_distribution).sum()
+
+        elif self.uplift_method == 'uplift_ratio':
+            uplift_distribution = beta_mcmc_alt/beta_mcmc_null
+            uplift_area = uplift_distribution[uplift_distribution >= 1].sum()/np.abs(uplift_distribution).sum()
+
+        elif self.uplift_method == 'uplift_difference':
+            uplift_distribution = beta_mcmc_alt - beta_mcmc_null
+            uplift_area = uplift_distribution[uplift_distribution >= 0].sum()/np.abs(uplift_distribution).sum()
+        
+        return uplift_distribution, uplift_area
+        
 
     def print_bayesian_results(self):
         """
@@ -442,7 +453,16 @@ class ABTestBayesian:
         print("Variant B: Successful Trials %s, Sample Size %s" %(self.success_alt, self.trials_alt))
         print("Prior: Successful Trials %s, Sample Size %s\n" %(self.success_prior, self.trials_prior))
         print("Test Results\n____________\n")
+        print("Samples per group for mcmc simulation: %s" %(self.n_trials))
+        print("Evaluation Metric: %s\n" %(self.uplift_method))
 
+        if self.uplift_method == 'uplift_percent':
+            print("%s %% simulations show Uplift Gain Percent above 0.\n"% (np.round(self.uplift_area*100, 2)))
+        elif self.uplift_method == 'uplift_ratio':
+            print("%s %% simulations show Uplift Ratio above 1.\n"% (np.round(self.uplift_area*100, 2)))
+        elif self.uplift_method == 'uplift_difference':
+            print("%s %% simulations show Uplift Difference above 0.\n"% (np.round(self.uplift_area*100, 2)))
+        
         self.plot_uplift_distributions()
         
     def plot_uplift_distributions(self, figsize=(18, 6)):
@@ -454,6 +474,7 @@ class ABTestBayesian:
         figsize : tuple, default = (18, 6)
             matplotlib plot size.
         """
+
         plt.figure(figsize=figsize)
 
         plt.subplot(1, 2, 1)
