@@ -7,7 +7,7 @@
 ========
 pyAB is a Python package for Bayesian & Frequentist A/B Testing.
 
-
+|
 Features:
 --------
 Bayesian A/B Test:
@@ -54,7 +54,7 @@ Documentation:
 
 pyAB documentation is available at `pyab.readthedocs.io <https://pyab.readthedocs.io/en/latest/>`_ & `pyab.rtfd.io <https://pyab.rtfd.io/en/latest/>`_.
 
-
+|
 ====
 Bayesian A/B Test:
 ====
@@ -98,6 +98,7 @@ Output:
    90.33 % simulations show Uplift Ratio above 1.
 
 .. image:: img/fig2.png
+|
 ====
 Frequentist A/B Test:
 ====
