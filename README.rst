@@ -1,10 +1,10 @@
 .. image:: https://readthedocs.org/projects/pyab/badge/?version=latest
   :target: https://pyab.readthedocs.io/en/latest/?badge=latest
 
-.. image:: https://img.shields.io/github/license/AdiVarma27/pyab
-  :target: https://github.com/AdiVarma27/pyAB/blob/master/LICENSE
-
 .. image:: https://img.shields.io/pypi/pyversions/pyAB
+  :target: https://github.com/AdiVarma27/pyAB
+
+.. image:: https://img.shields.io/github/license/AdiVarma27/pyab
   :target: https://github.com/AdiVarma27/pyAB/blob/master/LICENSE
 
 .. image:: https://img.shields.io/github/stars/AdiVarma27/pyAB?logo=Github 
