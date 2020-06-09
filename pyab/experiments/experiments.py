@@ -42,62 +42,7 @@ class ABTestFrequentist:
                 % (all_alt_hypothesis, alt_hypothesis)
             )
 
-    def calculate_power(self, stat):
-        """
-        Calculate power (1-beta) at given test statistics.
-
-        Parameters
-        ----------
-        stat : float
-            z or t test statistic.
-
-        Returns
-        -------
-        1 - beta : float
-            power at given test statistic.
-        """
-        dist_alt = st.norm(loc=stat)
-        if self.right_tailed_flag:
-            beta = dist_alt.cdf(self.stat_null_crit_upper)
-        else:
-            beta = 1 - dist_alt.cdf(self.stat_null_crit_lower)
-
-        return 1 - beta
-
-    def calculate_stat(self, prop_alt):
-        """
-        Calculate test statistic with current experiment parameters.
-
-        Parameters
-        ----------
-        prop_alt : float
-            alternate hypothesis proportion.
-
-        Returns
-        -------
-        stat : float
-            z or t statistic.
-        """
-        diff_prop = prop_alt - self.prop_null
-
-        self.right_tailed_flag = True if diff_prop >= 0 else False
-
-        moving_success_alt = prop_alt * self.trials_alt
-
-        prop_pooled = (self.success_null + moving_success_alt) / (
-            self.trials_null + self.trials_alt
-        )
-
-        variance = (
-            (prop_pooled) * (1 - prop_pooled)
-            * ((1 / self.trials_null) + (1 / self.trials_alt))
-        )
-
-        stat = diff_prop / np.sqrt(variance)
-
-        return stat
-
-    def conduct_experiment(self, success_null, trials_null, success_alt, trials_alt):
+        def conduct_experiment(self, success_null, trials_null, success_alt, trials_alt):
         """
         Conduct experiment & generate power curve with provided parameters.
 
@@ -242,6 +187,61 @@ class ABTestFrequentist:
 
         return self.stat, self.pvalue
 
+    def calculate_stat(self, prop_alt):
+        """
+        Calculate test statistic with current experiment parameters.
+
+        Parameters
+        ----------
+        prop_alt : float
+            alternate hypothesis proportion.
+
+        Returns
+        -------
+        stat : float
+            z or t statistic.
+        """
+        diff_prop = prop_alt - self.prop_null
+
+        self.right_tailed_flag = True if diff_prop >= 0 else False
+
+        moving_success_alt = prop_alt * self.trials_alt
+
+        prop_pooled = (self.success_null + moving_success_alt) / (
+            self.trials_null + self.trials_alt
+        )
+
+        variance = (
+            (prop_pooled) * (1 - prop_pooled)
+            * ((1 / self.trials_null) + (1 / self.trials_alt))
+        )
+
+        stat = diff_prop / np.sqrt(variance)
+
+        return stat
+    
+    def calculate_power(self, stat):
+        """
+        Calculate power (1-beta) at given test statistics.
+
+        Parameters
+        ----------
+        stat : float
+            z or t test statistic.
+
+        Returns
+        -------
+        1 - beta : float
+            power at given test statistic.
+        """
+        dist_alt = st.norm(loc=stat)
+        if self.right_tailed_flag:
+            beta = dist_alt.cdf(self.stat_null_crit_upper)
+        else:
+            beta = 1 - dist_alt.cdf(self.stat_null_crit_lower)
+
+        return 1 - beta
+
     def get_sample_size(self, beta=0.1):
         """
         Calculate required sample size per group to obtain provided beta.
@@ -271,32 +271,6 @@ class ABTestFrequentist:
             )
 
         return int(np.round(n,0))
-
-    def print_freq_results(self):
-        """
-        Print Frequentist Experiment Results
-        """
-        is_significant = False
-
-        if self.pvalue < self.alpha:
-            is_significant = True
-
-        print("pyAB Summary\n============\n")
-        print("Test Parameters\n_______________\n")
-        print("Variant A: Success Rate %s, Sample Size %s" %(self.prop_null, self.trials_null))
-        print("Variant B: Success Rate %s, Sample Size %s" %(self.prop_alt, self.trials_alt))
-        print("Type-I Error: %s, %s test\n" %(self.alpha, self.alt_hypothesis))
-        print("Test Results\n____________\n")
-        print("Test Stat: %s" % (np.round(self.stat, 3)))
-        print("p-value: %s" % (np.round(self.pvalue, 3)))
-        print("Type-II Error: %s" % (np.round(self.beta, 3)))
-        print("Power: %s\n" % (np.round(1-self.beta, 3)))
-        if is_significant:
-            print("There is a statistically significant difference in proportions of two variants.\n")
-        else:
-            print("There is no statistically significant difference in proportions of two variants.\n")
-
-        self.plot_power_curve()
 
     def plot_power_curve(self, figsize=(9, 6)):
         """
@@ -333,6 +307,31 @@ class ABTestFrequentist:
         plt.grid()
         plt.plot()
 
+    def print_freq_results(self):
+        """
+        Print Frequentist Experiment Results
+        """
+        is_significant = False
+
+        if self.pvalue < self.alpha:
+            is_significant = True
+
+        print("pyAB Summary\n============\n")
+        print("Test Parameters\n_______________\n")
+        print("Variant A: Success Rate %s, Sample Size %s" %(self.prop_null, self.trials_null))
+        print("Variant B: Success Rate %s, Sample Size %s" %(self.prop_alt, self.trials_alt))
+        print("Type-I Error: %s, %s test\n" %(self.alpha, self.alt_hypothesis))
+        print("Test Results\n____________\n")
+        print("Test Stat: %s" % (np.round(self.stat, 3)))
+        print("p-value: %s" % (np.round(self.pvalue, 3)))
+        print("Type-II Error: %s" % (np.round(self.beta, 3)))
+        print("Power: %s\n" % (np.round(1-self.beta, 3)))
+        if is_significant:
+            print("There is a statistically significant difference in proportions of two variants.\n")
+        else:
+            print("There is no statistically significant difference in proportions of two variants.\n")
+
+        self.plot_power_curve()
 
 class ABTestBayesian:
     """
@@ -450,30 +449,6 @@ class ABTestBayesian:
         
         return uplift_distribution, uplift_area
         
-
-    def print_bayesian_results(self):
-        """
-        Print Bayesian Experiment Results
-        """
-
-        print("pyAB Summary\n============\n")
-        print("Test Parameters\n_______________\n")
-        print("Variant A: Successful Trials %s, Sample Size %s" %(self.success_null, self.trials_null))
-        print("Variant B: Successful Trials %s, Sample Size %s" %(self.success_alt, self.trials_alt))
-        print("Prior: Successful Trials %s, Sample Size %s\n" %(self.success_prior, self.trials_prior))
-        print("Test Results\n____________\n")
-        print("Evaluation Metric: %s" %(self.uplift_method))
-        print("Number of mcmc simulations: %s\n" %(self.num_simulations))
-
-        if self.uplift_method == 'uplift_percent':
-            print("%s %% simulations show Uplift Gain Percent above 0.\n"% (np.round(self.uplift_area*100, 2)))
-        elif self.uplift_method == 'uplift_ratio':
-            print("%s %% simulations show Uplift Ratio above 1.\n"% (np.round(self.uplift_area*100, 2)))
-        elif self.uplift_method == 'uplift_difference':
-            print("%s %% simulations show Uplift Difference above 0.\n"% (np.round(self.uplift_area*100, 2)))
-        
-        self.plot_uplift_distributions()
-        
     def plot_uplift_distributions(self, figsize=(18, 6)):
         """
         Plot uplift pdf & cdf for provided experiment parameters.
@@ -502,3 +477,26 @@ class ABTestBayesian:
         plt.grid()
 
         plt.show()
+
+    def print_bayesian_results(self):
+        """
+        Print Bayesian Experiment Results
+        """
+
+        print("pyAB Summary\n============\n")
+        print("Test Parameters\n_______________\n")
+        print("Variant A: Successful Trials %s, Sample Size %s" %(self.success_null, self.trials_null))
+        print("Variant B: Successful Trials %s, Sample Size %s" %(self.success_alt, self.trials_alt))
+        print("Prior: Successful Trials %s, Sample Size %s\n" %(self.success_prior, self.trials_prior))
+        print("Test Results\n____________\n")
+        print("Evaluation Metric: %s" %(self.uplift_method))
+        print("Number of mcmc simulations: %s\n" %(self.num_simulations))
+
+        if self.uplift_method == 'uplift_percent':
+            print("%s %% simulations show Uplift Gain Percent above 0.\n"% (np.round(self.uplift_area*100, 2)))
+        elif self.uplift_method == 'uplift_ratio':
+            print("%s %% simulations show Uplift Ratio above 1.\n"% (np.round(self.uplift_area*100, 2)))
+        elif self.uplift_method == 'uplift_difference':
+            print("%s %% simulations show Uplift Difference above 0.\n"% (np.round(self.uplift_area*100, 2)))
+        
+        self.plot_uplift_distributions()
