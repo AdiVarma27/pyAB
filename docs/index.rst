@@ -1,8 +1,10 @@
-Welcome to pyAB's documentation
-===============================
+.. pyAB documentation master file, created by
+   sphinx-quickstart on Tue Jun  9 12:09:02 2020.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
 
-.. automodule:: pyab.experiments.experiments
-    :members:
+Welcome to pyAB's documentation!
+================================
 
 .. toctree::
    :maxdepth: 2
