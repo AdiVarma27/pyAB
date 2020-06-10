@@ -23,7 +23,7 @@ Bayesian A/B Test
 
 Output:
 
-.. code:: python
+.. sourcecode::
 
    pyAB Summary
    ============
@@ -65,7 +65,7 @@ Frequentist A/B Test
 
 Output:
 
-.. code:: python
+.. sourcecode::
 
    pyAB Summary
    ============
@@ -100,6 +100,6 @@ Given that the current Type-II error is 0.451 at 1000 samples per variant, we ca
 
 Output:
 
-.. code:: python
+.. sourcecode::
 
    2729
