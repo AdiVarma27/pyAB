@@ -21,6 +21,10 @@ Features:
 - Estimate required sample size per variant to reach expected Type-II error rate.
 - Visualize & inspect power curve for varying alternative proportions.
 
+.. toctree::
+   :hidden:
+
+   self
 
 .. toctree::
    :maxdepth: 2
@@ -29,3 +33,5 @@ Features:
    install
    quick_start
    api
+   contributing
+   release_history
