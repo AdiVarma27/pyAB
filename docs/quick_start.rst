@@ -25,16 +25,18 @@ Output:
 
 .. code::
 
-   **pyAB Summary**
+   pyAB Summary
+   ============
 
-
-   **Test Parameters**
+   Test Parameters
+   _______________
 
    Variant A: Successful Trials 100, Sample Size 1000
    Variant B: Successful Trials 125, Sample Size 1000
    Prior: Successful Trials 120, Sample Size 1000
 
-   **Test Results**
+   Test Results
+   ____________
 
    Evaluation Metric: uplift_ratio
    Number of mcmc simulations: 1000
@@ -66,17 +68,20 @@ Output:
 
 .. code::
 
-   **pyAB Summary**
+   pyAB Summary
+   ============
 
 
-   **Test Parameters**
+   Test Parameters
+   _______________
 
    Variant A: Success Rate 0.1, Sample Size 1000
    Variant B: Success Rate 0.125, Sample Size 1000
    Type-I Error: 0.05, one_tailed test
 
 
-   **Test Results**
+   Test Results
+   ____________
 
    Test Stat: 1.769
    p-value: 0.038
@@ -100,4 +105,5 @@ Output:
 =======
 
 .. code::
+
    2729
