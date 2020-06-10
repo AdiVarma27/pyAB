@@ -21,7 +21,7 @@ Bayesian A/B Test
                                              uplift_method='uplift_ratio', num_simulations=1000)
 
 Output:
-
+=======
 
 **pyAB Summary**
 
@@ -60,7 +60,7 @@ Frequentist A/B Test
                                     success_alt=125, trials_alt=1000)
 
 Output:
-
+=======
 
 **pyAB Summary**
 
@@ -93,5 +93,6 @@ Given that the current Type-II error is 0.451 at 1000 samples per variant, we ca
    ad_experiment.get_sample_size(beta=0.1)
 
 Output:
+=======
 
 2729
