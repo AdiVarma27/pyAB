@@ -28,9 +28,4 @@ Features:
 
    install
    quick_start
-
-.. toctree::
-   :maxdepth: 2
-   :caption: API
-
    api
