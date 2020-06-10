@@ -15,9 +15,9 @@ To install from source, use the following Github link
    cd pyAB
    python setup.py install
 
-============
+
 Dependencies
-============
+############
 
 pyAB has the following dependencies:
 
