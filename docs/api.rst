@@ -16,5 +16,5 @@ Experiments
 Utils
 #####
 
-.. automodule:: pyab.utils.check_data_input
+.. automodule:: pyab.utils
     :members:
