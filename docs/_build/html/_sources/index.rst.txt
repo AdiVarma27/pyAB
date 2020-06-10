@@ -35,4 +35,12 @@ Features:
 
    install
    quick_start
+
+.. automodule:: pyab.experiments
+    :members:
+
+.. toctree::
+   :maxdepth: 2
+   :caption: API
+   
    api
