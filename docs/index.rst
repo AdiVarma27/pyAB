@@ -26,3 +26,4 @@ Features:
    :caption: Content
 
    install
+   quick_start
