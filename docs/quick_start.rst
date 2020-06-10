@@ -8,8 +8,7 @@ Bayesian A/B Test
 
 
 
-.. code-block:: python
-    :linenos:
+.. code:: python
 
    # import Bayesian class
    from pyab.experiments import ABTestBayesian
@@ -24,7 +23,7 @@ Bayesian A/B Test
 
 Output:
 
-.. sourcecode::
+.. code:: python
 
    pyAB Summary
    ============
@@ -52,8 +51,7 @@ Frequentist A/B Test
 **Let us now run a Frequentist A/B Test and verify if there is a significant difference between two proportions provided the sample sizes and Type-I Error rate.**
 
 
-.. code-block:: python
-    :linenos:
+.. code:: python
 
    # import Frequentist class
    from pyab.experiments import ABTestFrequentist
@@ -67,7 +65,7 @@ Frequentist A/B Test
 
 Output:
 
-.. sourcecode::
+.. code:: python
 
    pyAB Summary
    ============
@@ -95,14 +93,13 @@ Output:
 Given that the current Type-II error is 0.451 at 1000 samples per variant, we can find out required sample size per variant to reach Type-II error of 0.1.
 
 
-.. code-block:: python
-    :linenos:
+.. code:: python
    
    # required sample size per variant for given beta
    ad_experiment.get_sample_size(beta=0.1)
 
 Output:
 
-.. sourcecode::
+.. code:: python
 
    2729
