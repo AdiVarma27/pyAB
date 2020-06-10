@@ -1,5 +1,5 @@
 ============
-Installation:
+Installation
 ============
 Best way to install pyAB is through pip
 
@@ -16,7 +16,7 @@ To install from source, use the following Github link
    python setup.py install
 
 ============
-Dependencies:
+Dependencies
 ============
 
 pyAB has the following dependencies:
