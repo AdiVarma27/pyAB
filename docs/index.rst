@@ -27,3 +27,4 @@ Features:
 
    install
    quick_start
+   api
