@@ -20,8 +20,8 @@ Bayesian A/B Test
                                              success_alt=125, trials_alt=1000, 
                                              uplift_method='uplift_ratio', num_simulations=1000)
 
-Output:
-=======
+**Output:**
+
 
 .. code::
 
@@ -63,8 +63,8 @@ Frequentist A/B Test
    stat, pvalue = ad_experiment_freq.conduct_experiment(success_null=100, trials_null=1000, 
                                     success_alt=125, trials_alt=1000)
 
-Output:
-=======
+**Output:**
+
 
 .. code::
 
@@ -101,8 +101,8 @@ Given that the current Type-II error is 0.451 at 1000 samples per variant, we ca
    # required sample size per variant for given beta
    ad_experiment.get_sample_size(beta=0.1)
 
-Output:
-=======
+**Output:**
+
 
 .. code::
 
