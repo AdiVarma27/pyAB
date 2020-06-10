@@ -7,7 +7,6 @@ Bayesian A/B Test
 **Let us assume we have two Banner Ads with 10% & 12.5% Click-through-rates. Let us run a Bayesian A/B Test to look at expected Uplift Ratio.**
 
 
-
 .. code:: python
 
    # import Bayesian class
