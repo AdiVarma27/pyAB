@@ -21,6 +21,14 @@ Features:
 - Estimate required sample size per variant to reach expected Type-II error rate.
 - Visualize & inspect power curve for varying alternative proportions.
 
+
+.. automodule:: pyab.experiments
+    :members:
+
+.. automodule:: pyab.utils
+    :members:
+
+
 .. toctree::
    :maxdepth: 2
    :caption: Content

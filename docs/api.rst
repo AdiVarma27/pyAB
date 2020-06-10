@@ -7,7 +7,3 @@ pyAB API (V 0.0.1)
 
 .. automodule:: pyab.utils
     :members:
-
-.. toctree::
-   :maxdepth: 2
-   :caption: API
