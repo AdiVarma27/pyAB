@@ -22,13 +22,6 @@ Features:
 - Visualize & inspect power curve for varying alternative proportions.
 
 
-.. automodule:: pyab.experiments
-    :members:
-
-.. automodule:: pyab.utils
-    :members:
-
-
 .. toctree::
    :maxdepth: 2
    :caption: Content
@@ -36,11 +29,8 @@ Features:
    install
    quick_start
 
-.. automodule:: pyab.experiments
-    :members:
-
 .. toctree::
    :maxdepth: 2
    :caption: API
-   
+
    api

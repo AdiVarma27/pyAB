@@ -1,9 +1,9 @@
-==================
-pyAB API (V 0.0.1)
-==================
+========================
+pyAB API (Version 0.0.1)
+========================
 
-.. automodule:: pyab.experiments
+.. autoclass:: pyab.experiments.ABTestBayesian
     :members:
 
-.. automodule:: pyab.utils
+.. autoclass:: pyab.experiments.ABTestFrequentist
     :members:

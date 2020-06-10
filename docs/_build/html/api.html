@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>pyAB API (V 0.0.1) &#8212; pyAB 0.0.1 documentation</title>
+    <title>pyAB API (Version 0.0.1) &#8212; pyAB 0.0.1 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -15,6 +15,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Quick Start" href="quick_start.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -31,9 +32,210 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="module-pyab.experiments">
-<span id="pyab-api-v-0-0-1"></span><h1>pyAB API (V 0.0.1)<a class="headerlink" href="#module-pyab.experiments" title="Permalink to this headline">¶</a></h1>
-<span class="target" id="module-pyab.utils"></span></div>
+  <div class="section" id="pyab-api-version-0-0-1">
+<h1>pyAB API (Version 0.0.1)<a class="headerlink" href="#pyab-api-version-0-0-1" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pyab.experiments.ABTestBayesian">
+<em class="property">class </em><code class="descclassname">pyab.experiments.</code><code class="descname">ABTestBayesian</code><span class="sig-paren">(</span><em>success_prior</em>, <em>trials_prior</em><span class="sig-paren">)</span><a class="headerlink" href="#pyab.experiments.ABTestBayesian" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bayesian A/B Testing.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>success_prior</strong> (<em>int</em>) -- Number of successful samples from prior.</li>
+<li><strong>trials_prior</strong> (<em>int</em>) -- Number of trials from prior.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pyab.experiments.ABTestBayesian.calculate_uplift_area">
+<code class="descname">calculate_uplift_area</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyab.experiments.ABTestBayesian.calculate_uplift_area" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate Uplift pdf &amp; area beyond threshold with provided test parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>uplift_distribution</strong> (<em>ndarray</em>) -- uplift distribution based on chosen uplift method.</li>
+<li><strong>uplift_area</strong> (<em>float</em>) -- percentage area above threshold.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyab.experiments.ABTestBayesian.conduct_experiment">
+<code class="descname">conduct_experiment</code><span class="sig-paren">(</span><em>success_null</em>, <em>trials_null</em>, <em>success_alt</em>, <em>trials_alt</em>, <em>uplift_method='uplift_percent'</em>, <em>num_simulations=1000</em><span class="sig-paren">)</span><a class="headerlink" href="#pyab.experiments.ABTestBayesian.conduct_experiment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Conduct experiment &amp; generate uplift pdf &amp; cdf with provided parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>success_null</strong> (<em>int</em>) -- Number of successful samples for variant-a.</li>
+<li><strong>trials_null</strong> (<em>int</em>) -- Number of trials for variant-a.</li>
+<li><strong>success_alt</strong> (<em>int</em>) -- Number of successful samples for variant-b.</li>
+<li><strong>trials_alt</strong> (<em>int</em>) -- Number of trials for variant-b.</li>
+<li><strong>num_simulations</strong> (<em>int</em>) -- Number of mcmc simulations.</li>
+<li><strong>uplift_method</strong> (<em>str</em><em>, </em><em>default = 'uplift_percent'</em>) -- <p>Uplift evaluation metric.</p>
+<ul>
+<li><dl class="first docutils">
+<dt>'uplift_percent':</dt>
+<dd>percent uplift gain from variant-a to variant-b</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>'uplift_ratio':</dt>
+<dd>uplift ratio of variant-b &amp; variant-a</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>'uplift_difference':</dt>
+<dd>uplift difference between variant-b &amp; variant-a</dd>
+</dl>
+</li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyab.experiments.ABTestBayesian.plot_uplift_distributions">
+<code class="descname">plot_uplift_distributions</code><span class="sig-paren">(</span><em>figsize=(18</em>, <em>6)</em><span class="sig-paren">)</span><a class="headerlink" href="#pyab.experiments.ABTestBayesian.plot_uplift_distributions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot uplift pdf &amp; cdf for provided experiment parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>figsize</strong> (<em>tuple</em><em>, </em><em>default =</em><em> (</em><em>18</em><em>, </em><em>6</em><em>)</em>) -- matplotlib plot size.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyab.experiments.ABTestBayesian.print_bayesian_results">
+<code class="descname">print_bayesian_results</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyab.experiments.ABTestBayesian.print_bayesian_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print Bayesian Experiment Results</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyab.experiments.ABTestFrequentist">
+<em class="property">class </em><code class="descclassname">pyab.experiments.</code><code class="descname">ABTestFrequentist</code><span class="sig-paren">(</span><em>alpha=0.05</em>, <em>alt_hypothesis='one_tailed'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyab.experiments.ABTestFrequentist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Frequentist A/B Testing aka Two sample proportion test.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>alpha</strong> (<em>float</em><em>, </em><em>default = 0.05</em>) -- Significane level or Type 1 error rate.</li>
+<li><strong>alt_hypothesis</strong> (<em>str</em><em>, </em><em>default = 'one_tailed'</em>) -- <p>One or two tailed hypothesis test.</p>
+<ul>
+<li><dl class="first docutils">
+<dt>'one_tailed':</dt>
+<dd>one tailed hypothesis test</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>'two_tailed':</dt>
+<dd>two tailed hypothesis test</dd>
+</dl>
+</li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pyab.experiments.ABTestFrequentist.calculate_power">
+<code class="descname">calculate_power</code><span class="sig-paren">(</span><em>stat</em><span class="sig-paren">)</span><a class="headerlink" href="#pyab.experiments.ABTestFrequentist.calculate_power" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate power (1-beta) at given test statistics.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>stat</strong> (<em>float</em>) -- z or t test statistic.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>1 - beta</strong> -- power at given test statistic.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyab.experiments.ABTestFrequentist.calculate_stat">
+<code class="descname">calculate_stat</code><span class="sig-paren">(</span><em>prop_alt</em><span class="sig-paren">)</span><a class="headerlink" href="#pyab.experiments.ABTestFrequentist.calculate_stat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate test statistic with current experiment parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>prop_alt</strong> (<em>float</em>) -- alternate hypothesis proportion.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>stat</strong> -- z or t statistic.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyab.experiments.ABTestFrequentist.get_sample_size">
+<code class="descname">get_sample_size</code><span class="sig-paren">(</span><em>beta=0.1</em><span class="sig-paren">)</span><a class="headerlink" href="#pyab.experiments.ABTestFrequentist.get_sample_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate required sample size per group to obtain provided beta.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>beta</strong> (<em>float</em>) -- Type 2 error rate.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>n</strong> -- sample size per group.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyab.experiments.ABTestFrequentist.plot_power_curve">
+<code class="descname">plot_power_curve</code><span class="sig-paren">(</span><em>figsize=(9</em>, <em>6)</em><span class="sig-paren">)</span><a class="headerlink" href="#pyab.experiments.ABTestFrequentist.plot_power_curve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot power curve for provided experiment parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>figsize</strong> (<em>tuple</em><em>, </em><em>default =</em><em> (</em><em>9</em><em>,</em><em>6</em><em>)</em>) -- matplotlib plot size.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyab.experiments.ABTestFrequentist.print_freq_results">
+<code class="descname">print_freq_results</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyab.experiments.ABTestFrequentist.print_freq_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print Frequentist Experiment Results</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 
 
           </div>
@@ -57,11 +259,16 @@
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
 </ul>
+<p class="caption"><span class="caption-text">API</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">pyAB API (Version 0.0.1)</a></li>
+</ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="quick_start.html" title="previous chapter">Quick Start</a></li>
   </ul></li>
 </ul>
 </div>
