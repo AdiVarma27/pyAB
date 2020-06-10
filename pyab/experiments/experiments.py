@@ -43,31 +43,31 @@ class ABTestFrequentist:
             )
 
         def conduct_experiment(self, success_null, trials_null, success_alt, trials_alt):
-        """
-        Conduct experiment & generate power curve with provided parameters.
+            """
+            Conduct experiment & generate power curve with provided parameters.
 
-        Parameters
-        ----------
-        success_null : int
-            number of successful clicks or successful events (Version-A).
+            Parameters
+            ----------
+            success_null : int
+                number of successful clicks or successful events (Version-A).
 
-        trials_null : int
-            number of impressions or events (Version-A).
+            trials_null : int
+                number of impressions or events (Version-A).
 
-        success_alt : int
-            number of successful clicks or successful events (Version-B).
+            success_alt : int
+                number of successful clicks or successful events (Version-B).
 
-        trials_alt : int
-            number of impressions or events (Version-B).
+            trials_alt : int
+                number of impressions or events (Version-B).
 
-        Returns
-        -------
-        stat : float
-            z or t statistic.
+            Returns
+            -------
+            stat : float
+                z or t statistic.
 
-        pvalue : float
-            probability of obtaining results atleast as extreme as the results actually observed during the test.
-        """
+            pvalue : float
+                probability of obtaining results atleast as extreme as the results actually observed during the test.
+            """
         check_data_input(success_null, trials_null)
         check_data_input(success_alt, trials_alt)
 

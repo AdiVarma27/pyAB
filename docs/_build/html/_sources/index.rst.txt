@@ -1,20 +1,27 @@
-.. pyAB documentation master file, created by
-   sphinx-quickstart on Tue Jun  9 12:09:02 2020.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+********
+**pyAB**
+********
+pyAB is a Python package for Bayesian & Frequentist A/B Testing.
 
-Welcome to pyAB's documentation!
-================================
+*********
+Features:
+*********
+
+
+**Bayesian A/B Test**:
+
+- Conduct quick experiments to check for winning variant with additional prior information (Beta Distribution parameters).
+- Try different evaluation metrics (Uplift Ratio, Difference & Percent Gain) & vary MCMC simulation sample size per variant.
+- Visualize & inspect Uplift Density & Cumulative Density distributions.
+
+**Frequentist A/B Test**:
+
+- Conduct quick experiments to check for winning variant (Statistical significance).
+- Estimate required sample size per variant to reach expected Type-II error rate.
+- Visualize & inspect power curve for varying alternative proportions.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Content
 
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   install
