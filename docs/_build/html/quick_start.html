@@ -1,0 +1,187 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="Python">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Quick Start &#8212; pyAB 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pyAB API (V 0.0.1)" href="api.html" />
+    <link rel="prev" title="Installation" href="install.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="quick-start">
+<h1>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="bayesian-a-b-test">
+<h2>Bayesian A/B Test<a class="headerlink" href="#bayesian-a-b-test" title="Permalink to this headline">¶</a></h2>
+<p><strong>Let us assume we have two Banner Ads with 10% &amp; 12.5% Click-through-rates. Let us run a Bayesian A/B Test to look at expected Uplift Ratio.</strong></p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># import Bayesian class</span>
+<span class="kn">from</span> <span class="nn">pyab.experiments</span> <span class="k">import</span> <span class="n">ABTestBayesian</span>
+
+<span class="c1"># provide beta priors</span>
+<span class="n">ad_experiment_bayesian</span> <span class="o">=</span> <span class="n">ABTestBayesian</span><span class="p">(</span><span class="n">success_prior</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">trials_prior</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+
+<span class="c1"># conduct experiment with two variants successes and trials, along with uplift method and number of simulations</span>
+<span class="n">ad_experiment_bayesian</span><span class="o">.</span><span class="n">conduct_experiment</span><span class="p">(</span><span class="n">success_null</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">trials_null</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+                                          <span class="n">success_alt</span><span class="o">=</span><span class="mi">125</span><span class="p">,</span> <span class="n">trials_alt</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+                                          <span class="n">uplift_method</span><span class="o">=</span><span class="s1">&#39;uplift_ratio&#39;</span><span class="p">,</span> <span class="n">num_simulations</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<p><strong>pyAB Summary</strong></p>
+<div class="section" id="test-parameters">
+<h3>Test Parameters<a class="headerlink" href="#test-parameters" title="Permalink to this headline">¶</a></h3>
+<p>Variant A: Successful Trials 100, Sample Size 1000
+Variant B: Successful Trials 125, Sample Size 1000
+Prior: Successful Trials 120, Sample Size 1000</p>
+</div>
+<div class="section" id="test-results">
+<h3>Test Results<a class="headerlink" href="#test-results" title="Permalink to this headline">¶</a></h3>
+<p>Evaluation Metric: uplift_ratio
+Number of mcmc simulations: 1000</p>
+<p>90.33 % simulations show Uplift Ratio above 1.</p>
+<img alt="img/fig2.png" src="img/fig2.png" />
+</div>
+</div>
+<div class="section" id="frequentist-a-b-test">
+<h2>Frequentist A/B Test<a class="headerlink" href="#frequentist-a-b-test" title="Permalink to this headline">¶</a></h2>
+<p><strong>Let us now run a Frequentist A/B Test and verify if there is a significant difference between two proportions provided the sample sizes and Type-I Error rate.</strong></p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># import Frequentist class</span>
+<span class="kn">from</span> <span class="nn">pyab.experiments</span> <span class="k">import</span> <span class="n">ABTestFrequentist</span>
+
+<span class="c1"># provide significance rate and type of test</span>
+<span class="n">ad_experiment_freq</span> <span class="o">=</span> <span class="n">ABTestFrequentist</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">alt_hypothesis</span><span class="o">=</span><span class="s1">&#39;one_tailed&#39;</span><span class="p">)</span>
+
+<span class="c1"># conduct experiment with two variants successes and trials, returns stat &amp; pvalue</span>
+<span class="n">stat</span><span class="p">,</span> <span class="n">pvalue</span> <span class="o">=</span> <span class="n">ad_experiment_freq</span><span class="o">.</span><span class="n">conduct_experiment</span><span class="p">(</span><span class="n">success_null</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">trials_null</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+                                 <span class="n">success_alt</span><span class="o">=</span><span class="mi">125</span><span class="p">,</span> <span class="n">trials_alt</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<p><strong>pyAB Summary</strong></p>
+<div class="section" id="id1">
+<h3>Test Parameters<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Variant A: Success Rate 0.1, Sample Size 1000
+Variant B: Success Rate 0.125, Sample Size 1000
+Type-I Error: 0.05, one_tailed test</p>
+</div>
+<div class="section" id="id2">
+<h3>Test Results<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Test Stat: 1.769
+p-value: 0.038
+Type-II Error: 0.451
+Power: 0.549</p>
+<p>There is a statistically significant difference in proportions of two variants.</p>
+<img alt="img/fig1.png" src="img/fig1.png" />
+<p>Given that the current Type-II error is 0.451 at 1000 samples per variant, we can find out required sample size per variant to reach Type-II error of 0.1.</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># required sample size per variant for given beta</span>
+<span class="n">ad_experiment</span><span class="o">.</span><span class="n">get_sample_size</span><span class="p">(</span><span class="n">beta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<p>2729</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">pyAB</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Content</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#bayesian-a-b-test">Bayesian A/B Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#frequentist-a-b-test">Frequentist A/B Test</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">pyAB API (V 0.0.1)</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="install.html" title="previous chapter">Installation</a></li>
+      <li>Next: <a href="api.html" title="next chapter">pyAB API (V 0.0.1)</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Aditya Varma Kalidindi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/quick_start.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
