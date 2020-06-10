@@ -23,25 +23,24 @@ Bayesian A/B Test
 
 Output:
 
-.. sourcecode::
 
-   pyAB Summary
-   ============
+**pyAB Summary**
 
-   Test Parameters
-   _______________
 
-   Variant A: Successful Trials 100, Sample Size 1000
-   Variant B: Successful Trials 125, Sample Size 1000
-   Prior: Successful Trials 120, Sample Size 1000
+Test Parameters
+_______________
 
-   Test Results
-   ____________
+Variant A: Successful Trials 100, Sample Size 1000
+Variant B: Successful Trials 125, Sample Size 1000
+Prior: Successful Trials 120, Sample Size 1000
 
-   Evaluation Metric: uplift_ratio
-   Number of mcmc simulations: 1000
+Test Results
+____________
 
-   90.33 % simulations show Uplift Ratio above 1.
+Evaluation Metric: uplift_ratio
+Number of mcmc simulations: 1000
+
+90.33 % simulations show Uplift Ratio above 1.
 
 .. image:: img/fig2.png
 
@@ -65,27 +64,26 @@ Frequentist A/B Test
 
 Output:
 
-.. sourcecode::
 
-   pyAB Summary
-   ============
+**pyAB Summary**
 
-   Test Parameters
-   _______________
 
-   Variant A: Success Rate 0.1, Sample Size 1000
-   Variant B: Success Rate 0.125, Sample Size 1000
-   Type-I Error: 0.05, one_tailed test
+Test Parameters
+_______________
 
-   Test Results
-   ____________
+Variant A: Success Rate 0.1, Sample Size 1000
+Variant B: Success Rate 0.125, Sample Size 1000
+Type-I Error: 0.05, one_tailed test
 
-   Test Stat: 1.769
-   p-value: 0.038
-   Type-II Error: 0.451
-   Power: 0.549
+Test Results
+____________
 
-   There is a statistically significant difference in proportions of two variants.
+Test Stat: 1.769
+p-value: 0.038
+Type-II Error: 0.451
+Power: 0.549
+
+There is a statistically significant difference in proportions of two variants.
 
 .. image:: img/fig1.png
 
@@ -100,6 +98,4 @@ Given that the current Type-II error is 0.451 at 1000 samples per variant, we ca
 
 Output:
 
-.. sourcecode::
-
-   2729
+2729
