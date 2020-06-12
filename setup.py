@@ -8,7 +8,7 @@ with open(os.path.join(curr_path, 'requirements.txt')) as req_file:
 
 
 setup(name='pyAB',
-      version='0.0.21212',
+      version='5.0.0',
       description='A/B Testing using Bayesian & Frequentist Statistics',
       url='https://github.com/AdiVarma27/pyAB',
       author='Aditya Varma Kalidindi',
