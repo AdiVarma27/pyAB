@@ -54,7 +54,7 @@ Bayesian A/B test results can extremely useful to **understand & communicate tes
 
 Frequentist A/B Test
 ####################
-Let us now run a Frequentist A/B Test and verify if there is a significant difference between two proportions provided the sample sizes and Type-I Error rate. From above, we know the performance of version-A & version-B **(10 % & 12.5 % Click-through-rates)**, for 1000 impressions of each version.
+Let us now run a Frequentist A/B Test and verify if there is a statistically significant difference between two proportions, provided the sample sizes and Type-I Error rate. From above, we know the performance of version-A & version-B **(10 % & 12.5 % Click-through-rates)**, for 1000 impressions of each version.
 
 We first need to import  ``ABTestFrequentist`` class and provide type of alternative hypothesis ``alt_hypothesis``, ``'one_tailed'`` or ``'two_tailed'`` & Type-I error rate ``alpha`` (default = 0.05). Then, we call the ``conduct_experiment`` method with successful clicks and impressions per version.
 

@@ -71,11 +71,18 @@ Documentation:
 
 pyAB documentation is available at `pyab.readthedocs.io <https://pyab.readthedocs.io/en/latest/>`_ & `pyab.rtfd.io <https://pyab.rtfd.io/en/latest/>`_.
 
-=================
-Bayesian A/B Test:
-=================
-**Let us assume we have two Banner Ads with 10% & 12.5% Click-through-rates. Let us run a Bayesian A/B Test to look at expected Uplift Ratio.**
+Usage:
+######
 
+=================
+Bayesian A/B Test
+=================
+
+Let us assume we have two Banner Ads and want to run an AB Test to decide on the final version. We run the test and collect 1000 samples per version. We observe 100 and 120 clicks for version-A & Version-B respectively **(10 % & 12.5 % Click-through-rates)**. From our previous experience, we know that the average Click-through-rate for our previous Ads was around 12 %. 
+
+We first need to import  ``ABTestBayesian`` class and provide prior clicks ``success_prior`` and prior impressions ``trials_prior``. Then, call the ``conduct_experiment`` method with successful clicks and impressions per version.
+
+For ``uplift_method``, there are three metrics to choose from are ``'uplift_ratio'``, ``'uplift_percent'`` & ``'uplift_difference'``. We also choose mcmc ``num_simulations``, which samples from Uplift Probability Density function.
 
 
 .. code:: python
@@ -91,9 +98,12 @@ Bayesian A/B Test:
                                              success_alt=125, trials_alt=1000, 
                                              uplift_method='uplift_ratio', num_simulations=1000)
 
-Output:
+Bayesian A/B test results can extremely useful to **understand & communicate test results** with other stakeholders and answers the main business question: **Which version works the best ?**
 
-.. sourcecode::
+**Output:**
+
+
+.. code::
 
    pyAB Summary
    ============
@@ -113,12 +123,18 @@ Output:
 
    90.33 % simulations show Uplift Ratio above 1.
 
-.. image:: img/fig2.png
+.. image:: fig2.png
+
 
 ====================
-Frequentist A/B Test:
+Frequentist A/B Test
 ====================
-**Let us now run a Frequentist A/B Test and verify if there is a significant difference between two proportions provided the sample sizes and Type-I Error rate.**
+
+Let us now run a Frequentist A/B Test and verify if there is a significant difference between two proportions provided the sample sizes and Type-I Error rate. From above, we know the performance of version-A & version-B **(10 % & 12.5 % Click-through-rates)**, for 1000 impressions of each version.
+
+We first need to import  ``ABTestFrequentist`` class and provide type of alternative hypothesis ``alt_hypothesis``, ``'one_tailed'`` or ``'two_tailed'`` & Type-I error rate ``alpha`` (default = 0.05). Then, we call the ``conduct_experiment`` method with successful clicks and impressions per version.
+
+This traditional methodology might be **slightly tricky to communicate**, and **Type-I & Type-II error rates** need to be accounted for, unlike Bayesian methods.
 
 
 .. code:: python
@@ -133,12 +149,14 @@ Frequentist A/B Test:
    stat, pvalue = ad_experiment_freq.conduct_experiment(success_null=100, trials_null=1000, 
                                     success_alt=125, trials_alt=1000)
 
-Output:
+**Output:**
 
-.. sourcecode::
+
+.. code::
 
    pyAB Summary
    ============
+
 
    Test Parameters
    _______________
@@ -146,6 +164,7 @@ Output:
    Variant A: Success Rate 0.1, Sample Size 1000
    Variant B: Success Rate 0.125, Sample Size 1000
    Type-I Error: 0.05, one_tailed test
+
 
    Test Results
    ____________
@@ -157,10 +176,10 @@ Output:
 
    There is a statistically significant difference in proportions of two variants.
 
-.. image:: img/fig1.png
+.. image:: fig1.png
 
 
-Given that the current Type-II error is 0.451 at 1000 samples per variant, we can find out required sample size per variant to reach Type-II error of 0.1.
+Given that the current Type-II error is 0.451 at 1000 samples per variant, we can find out **required sample size per variant** to reach Type-II error of 0.1.
 
 
 .. code:: python
@@ -168,9 +187,10 @@ Given that the current Type-II error is 0.451 at 1000 samples per variant, we ca
    # required sample size per variant for given beta
    ad_experiment.get_sample_size(beta=0.1)
 
-Output:
+**Output:**
 
-.. sourcecode::
+
+.. code::
 
    2729
 
