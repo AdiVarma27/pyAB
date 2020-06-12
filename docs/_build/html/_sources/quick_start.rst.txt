@@ -4,7 +4,11 @@ Quick Start
 
 Bayesian A/B Test
 #################
-**Let us assume we have two Banner Ads with 10% & 12.5% Click-through-rates. Let us run a Bayesian A/B Test to look at expected Uplift Ratio.**
+Let us assume we have two Banner Ads and want to run an AB Test to decide the final version. We run the test and collect 1000 samples for each version. We observe 100 and 120 clicks for version-A & Version-B respectively (10 % & 12.5 % Click-through-rates). From our previous experience, we know that the average Click-through-rate for our previous Ads was around 12 %. 
+
+We first need to import  ``ABTestBayesian`` class and provide prior clicks (``success_prior``) and prior impressions (``trials_prior``). Then, call the ``conduct_experiment`` method with successful clicks and impressions per version.
+
+For ``uplift_method``, there are three metrics to choose from are ``'uplift_ratio'``, ``'uplift_percent'`` & ``'uplift_difference'``. We also choose mcmc ``num_simulations``, which samples from Uplift Probability Density function.
 
 
 .. code:: python
@@ -19,6 +23,7 @@ Bayesian A/B Test
    ad_experiment_bayesian.conduct_experiment(success_null=100, trials_null=1000, 
                                              success_alt=125, trials_alt=1000, 
                                              uplift_method='uplift_ratio', num_simulations=1000)
+
 
 **Output:**
 
