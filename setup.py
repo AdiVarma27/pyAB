@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
 with open('requirements.txt') as req_file:
     REQUIRED_PACKAGES = [line.rstrip() for line in req_file]
