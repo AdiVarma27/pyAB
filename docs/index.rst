@@ -35,10 +35,3 @@ Features:
    api
    contributing
    release_history
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
