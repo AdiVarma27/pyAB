@@ -12,11 +12,12 @@ Contributors and participants of pyAB are expected to follow guidelines provided
 .. _Python Community Code of Conduct: https://www.python.org/psf/conduct/
 
 
-**Steps to Contribute**
-#######################
+**Contribtions & Improvements**
+###############################
 
-For issues, please submit them to the `issue tracker`_. If you can provide features, improvements or anything else the world of AB Testing has to offer, your contributions are highly appreciated. 
+For issues, please submit them to the `issue tracker`_. If you can provide features, improvements or anything else the world of AB Testing has to offer, your contributions are highly appreciated.
 
+Code in master branch should reflect current release version. Create a pull request and add your merge request to the **dev-pyab** branch.
 
 Please follow the following standard to `contribute`_.
 
