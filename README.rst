@@ -27,7 +27,7 @@ Features:
 Bayesian A/B Test:
 ##################
 - Conduct quick experiments to check for winning variant with additional prior information (Beta Distribution parameters).
-- Try different evaluation metrics (Uplift Ratio, Uplift Difference & Uplift Percent Gain) & vary MCMC simulation sample size per variant.
+- Try different evaluation metrics (Uplift Ratio, Uplift Difference & Uplift Percent Gain) & vary numner of MCMC simulations.
 - Visualize & inspect Uplift Density & Cumulative Density distributions.
 
 Frequentist A/B Test:
