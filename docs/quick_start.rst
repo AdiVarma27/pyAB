@@ -4,9 +4,9 @@ Quick Start
 
 Bayesian A/B Test
 #################
-Let us assume we have two Banner Ads and want to run an AB Test to decide on the final version. We run the test and collect 1000 samples for each version. We observe 100 and 120 clicks for version-A & Version-B respectively **(10 % & 12.5 % Click-through-rates)**. From our previous experience, we know that the average Click-through-rate for our previous Ads was around 12 %. 
+Let us assume we have two Banner Ads and want to run an AB Test to decide on the final version. We run the test and collect 1000 samples per version. We observe 100 and 120 clicks for version-A & Version-B respectively **(10 % & 12.5 % Click-through-rates)**. From our previous experience, we know that the average Click-through-rate for our previous Ads was around 12 %. 
 
-We first need to import  ``ABTestBayesian`` class and provide prior clicks (``success_prior``) and prior impressions (``trials_prior``). Then, call the ``conduct_experiment`` method with successful clicks and impressions per version.
+We first need to import  ``ABTestBayesian`` class and provide prior clicks ``success_prior`` and prior impressions ``trials_prior``. Then, call the ``conduct_experiment`` method with successful clicks and impressions per version.
 
 For ``uplift_method``, there are three metrics to choose from are ``'uplift_ratio'``, ``'uplift_percent'`` & ``'uplift_difference'``. We also choose mcmc ``num_simulations``, which samples from Uplift Probability Density function.
 
@@ -54,9 +54,9 @@ Bayesian A/B test results can extremely useful to **understand & communicate tes
 
 Frequentist A/B Test
 ####################
-Let us now run a Frequentist A/B Test and verify if there is a significant difference between two proportions provided the sample sizes and Type-I Error rate. From above, we know the performance of version-A & version-B **(10 % & 12.5 % Click-through-rates)**, 1000 impressions each.
+Let us now run a Frequentist A/B Test and verify if there is a significant difference between two proportions provided the sample sizes and Type-I Error rate. From above, we know the performance of version-A & version-B **(10 % & 12.5 % Click-through-rates)**, for 1000 impressions of each version.
 
-We first need to import  ``ABTestFrequentist`` class and provide type of alternative hypothesis ``alt_hypothesis`` (``'one_tailed'`` or ``two_tailed``) & Type-I error rate ``alpha`` (default = 0.05). Then, we call the ``conduct_experiment`` method with successful clicks and impressions per version.
+We first need to import  ``ABTestFrequentist`` class and provide type of alternative hypothesis ``alt_hypothesis``, ``'one_tailed'`` or ``'two_tailed'`` & Type-I error rate ``alpha`` (default = 0.05). Then, we call the ``conduct_experiment`` method with successful clicks and impressions per version.
 
 This traditional methodology might be **slightly tricky to communicate**, and **Type-I & Type-II error rates** need to be accounted for, unlike Bayesian methods.
 
@@ -103,7 +103,7 @@ This traditional methodology might be **slightly tricky to communicate**, and **
 .. image:: ../img/fig1.png
 
 
-Given that the current Type-II error is 0.451 at 1000 samples per variant, we can find out required sample size per variant to reach Type-II error of 0.1.
+Given that the current Type-II error is 0.451 at 1000 samples per variant, we can find out **required sample size per variant** to reach Type-II error of 0.1.
 
 
 .. code:: python

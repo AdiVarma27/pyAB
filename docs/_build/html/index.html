@@ -80,6 +80,100 @@
 </ul>
 </div>
 </div>
+<div class="section" id="usage">
+<h2>Usage:<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="bayesian-a-b-test">
+<h2>Bayesian A/B Test<a class="headerlink" href="#bayesian-a-b-test" title="Permalink to this headline">¶</a></h2>
+<p>Let us assume we have two Banner Ads and want to run an AB Test to decide on the final version. We run the test and collect 1000 samples per version. We observe 100 and 120 clicks for version-A &amp; Version-B respectively <strong>(10 % &amp; 12.5 % Click-through-rates)</strong>. From our previous experience, we know that the average Click-through-rate for our previous Ads was around 12 %.</p>
+<p>We first need to import  <code class="docutils literal notranslate"><span class="pre">ABTestBayesian</span></code> class and provide prior clicks <code class="docutils literal notranslate"><span class="pre">success_prior</span></code> and prior impressions <code class="docutils literal notranslate"><span class="pre">trials_prior</span></code>. Then, call the <code class="docutils literal notranslate"><span class="pre">conduct_experiment</span></code> method with successful clicks and impressions per version.</p>
+<p>For <code class="docutils literal notranslate"><span class="pre">uplift_method</span></code>, there are three metrics to choose from are <code class="docutils literal notranslate"><span class="pre">'uplift_ratio'</span></code>, <code class="docutils literal notranslate"><span class="pre">'uplift_percent'</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">'uplift_difference'</span></code>. We also choose mcmc <code class="docutils literal notranslate"><span class="pre">num_simulations</span></code>, which samples from Uplift Probability Density function.</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># import Bayesian class</span>
+<span class="kn">from</span> <span class="nn">pyab.experiments</span> <span class="kn">import</span> <span class="n">ABTestBayesian</span>
+
+<span class="c1"># provide beta priors</span>
+<span class="n">ad_experiment_bayesian</span> <span class="o">=</span> <span class="n">ABTestBayesian</span><span class="p">(</span><span class="n">success_prior</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">trials_prior</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+
+<span class="c1"># conduct experiment with two variants successes and trials, along with uplift method and number of simulations</span>
+<span class="n">ad_experiment_bayesian</span><span class="o">.</span><span class="n">conduct_experiment</span><span class="p">(</span><span class="n">success_null</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">trials_null</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+                                          <span class="n">success_alt</span><span class="o">=</span><span class="mi">125</span><span class="p">,</span> <span class="n">trials_alt</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+                                          <span class="n">uplift_method</span><span class="o">=</span><span class="s1">&#39;uplift_ratio&#39;</span><span class="p">,</span> <span class="n">num_simulations</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Bayesian A/B test results can extremely useful to <strong>understand &amp; communicate test results</strong> with other stakeholders and answers the main business question: <strong>Which version works the best ?</strong></p>
+<p><strong>Output:</strong></p>
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pyAB</span> <span class="n">Summary</span>
+<span class="o">============</span>
+
+<span class="n">Test</span> <span class="n">Parameters</span>
+<span class="n">_______________</span>
+
+<span class="n">Variant</span> <span class="n">A</span><span class="p">:</span> <span class="n">Successful</span> <span class="n">Trials</span> <span class="mi">100</span><span class="p">,</span> <span class="n">Sample</span> <span class="n">Size</span> <span class="mi">1000</span>
+<span class="n">Variant</span> <span class="n">B</span><span class="p">:</span> <span class="n">Successful</span> <span class="n">Trials</span> <span class="mi">125</span><span class="p">,</span> <span class="n">Sample</span> <span class="n">Size</span> <span class="mi">1000</span>
+<span class="n">Prior</span><span class="p">:</span> <span class="n">Successful</span> <span class="n">Trials</span> <span class="mi">120</span><span class="p">,</span> <span class="n">Sample</span> <span class="n">Size</span> <span class="mi">1000</span>
+
+<span class="n">Test</span> <span class="n">Results</span>
+<span class="n">____________</span>
+
+<span class="n">Evaluation</span> <span class="n">Metric</span><span class="p">:</span> <span class="n">uplift_ratio</span>
+<span class="n">Number</span> <span class="n">of</span> <span class="n">mcmc</span> <span class="n">simulations</span><span class="p">:</span> <span class="mi">1000</span>
+
+<span class="mf">90.33</span> <span class="o">%</span> <span class="n">simulations</span> <span class="n">show</span> <span class="n">Uplift</span> <span class="n">Ratio</span> <span class="n">above</span> <span class="mf">1.</span>
+</pre></div>
+</div>
+<img alt="_images/fig2.png" src="_images/fig2.png" />
+</div>
+<div class="section" id="frequentist-a-b-test">
+<h2>Frequentist A/B Test<a class="headerlink" href="#frequentist-a-b-test" title="Permalink to this headline">¶</a></h2>
+<p>Let us now run a Frequentist A/B Test and verify if there is a significant difference between two proportions provided the sample sizes and Type-I Error rate. From above, we know the performance of version-A &amp; version-B <strong>(10 % &amp; 12.5 % Click-through-rates)</strong>, for 1000 impressions of each version.</p>
+<p>We first need to import  <code class="docutils literal notranslate"><span class="pre">ABTestFrequentist</span></code> class and provide type of alternative hypothesis <code class="docutils literal notranslate"><span class="pre">alt_hypothesis</span></code>, <code class="docutils literal notranslate"><span class="pre">'one_tailed'</span></code> or <code class="docutils literal notranslate"><span class="pre">'two_tailed'</span></code> &amp; Type-I error rate <code class="docutils literal notranslate"><span class="pre">alpha</span></code> (default = 0.05). Then, we call the <code class="docutils literal notranslate"><span class="pre">conduct_experiment</span></code> method with successful clicks and impressions per version.</p>
+<p>This traditional methodology might be <strong>slightly tricky to communicate</strong>, and <strong>Type-I &amp; Type-II error rates</strong> need to be accounted for, unlike Bayesian methods.</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># import Frequentist class</span>
+<span class="kn">from</span> <span class="nn">pyab.experiments</span> <span class="kn">import</span> <span class="n">ABTestFrequentist</span>
+
+<span class="c1"># provide significance rate and type of test</span>
+<span class="n">ad_experiment_freq</span> <span class="o">=</span> <span class="n">ABTestFrequentist</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">alt_hypothesis</span><span class="o">=</span><span class="s1">&#39;one_tailed&#39;</span><span class="p">)</span>
+
+<span class="c1"># conduct experiment with two variants successes and trials, returns stat &amp; pvalue</span>
+<span class="n">stat</span><span class="p">,</span> <span class="n">pvalue</span> <span class="o">=</span> <span class="n">ad_experiment_freq</span><span class="o">.</span><span class="n">conduct_experiment</span><span class="p">(</span><span class="n">success_null</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">trials_null</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+                                 <span class="n">success_alt</span><span class="o">=</span><span class="mi">125</span><span class="p">,</span> <span class="n">trials_alt</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Output:</strong></p>
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pyAB</span> <span class="n">Summary</span>
+<span class="o">============</span>
+
+
+<span class="n">Test</span> <span class="n">Parameters</span>
+<span class="n">_______________</span>
+
+<span class="n">Variant</span> <span class="n">A</span><span class="p">:</span> <span class="n">Success</span> <span class="n">Rate</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">Sample</span> <span class="n">Size</span> <span class="mi">1000</span>
+<span class="n">Variant</span> <span class="n">B</span><span class="p">:</span> <span class="n">Success</span> <span class="n">Rate</span> <span class="mf">0.125</span><span class="p">,</span> <span class="n">Sample</span> <span class="n">Size</span> <span class="mi">1000</span>
+<span class="n">Type</span><span class="o">-</span><span class="n">I</span> <span class="n">Error</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">,</span> <span class="n">one_tailed</span> <span class="n">test</span>
+
+
+<span class="n">Test</span> <span class="n">Results</span>
+<span class="n">____________</span>
+
+<span class="n">Test</span> <span class="n">Stat</span><span class="p">:</span> <span class="mf">1.769</span>
+<span class="n">p</span><span class="o">-</span><span class="n">value</span><span class="p">:</span> <span class="mf">0.038</span>
+<span class="n">Type</span><span class="o">-</span><span class="n">II</span> <span class="n">Error</span><span class="p">:</span> <span class="mf">0.451</span>
+<span class="n">Power</span><span class="p">:</span> <span class="mf">0.549</span>
+
+<span class="n">There</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">statistically</span> <span class="n">significant</span> <span class="n">difference</span> <span class="ow">in</span> <span class="n">proportions</span> <span class="n">of</span> <span class="n">two</span> <span class="n">variants</span><span class="o">.</span>
+</pre></div>
+</div>
+<img alt="_images/fig1.png" src="_images/fig1.png" />
+<p>Given that the current Type-II error is 0.451 at 1000 samples per variant, we can find out <strong>required sample size per variant</strong> to reach Type-II error of 0.1.</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># required sample size per variant for given beta</span>
+<span class="n">ad_experiment</span><span class="o">.</span><span class="n">get_sample_size</span><span class="p">(</span><span class="n">beta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Output:</strong></p>
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2729</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
