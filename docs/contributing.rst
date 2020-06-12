@@ -17,9 +17,7 @@ Contributors and participants of pyAB are expected to follow guidelines provided
 
 * For issues, please submit them to the `issue tracker`_. If you can provide features, improvements or anything else the world of AB Testing has to offer, your contributions are highly appreciated.
 
-
 * Code in master branch should reflect the latest version. Create a pull request and add your merge request to the ``dev-pyab`` branch.
-
 
 * Please follow `pep8`_ for coding conventions and check out `this`_ article for quick help. For detailed information about Git, visit https://rogerdudler.github.io/git-guide/.
 
