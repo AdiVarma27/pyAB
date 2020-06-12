@@ -24,7 +24,7 @@ For ``uplift_method``, there are three metrics to choose from are ``'uplift_rati
                                              success_alt=125, trials_alt=1000, 
                                              uplift_method='uplift_ratio', num_simulations=1000)
 
-Bayesian A/B test results can extremely useful to **understand & communicate test results** with other stakeholders and answer the main business question: **Which version works the best ?**
+Bayesian A/B test results can extremely useful to **understand & communicate test results** with other stakeholders and answers the main business question: **Which version works the best ?**
 
 **Output:**
 
@@ -54,7 +54,11 @@ Bayesian A/B test results can extremely useful to **understand & communicate tes
 
 Frequentist A/B Test
 ####################
-**Let us now run a Frequentist A/B Test and verify if there is a significant difference between two proportions provided the sample sizes and Type-I Error rate.**
+Let us now run a Frequentist A/B Test and verify if there is a significant difference between two proportions provided the sample sizes and Type-I Error rate. From above, we know the performance of version-A & version-B **(10 % & 12.5 % Click-through-rates)**, 1000 impressions each.
+
+We first need to import  ``ABTestFrequentist`` class and provide type of alternative hypothesis ``alt_hypothesis`` (``'one_tailed'`` or ``two_tailed``) & Type-I error rate ``alpha`` (default = 0.05). Then, we call the ``conduct_experiment`` method with successful clicks and impressions per version.
+
+This traditional methodology might be **slightly tricky to communicate**, and **Type-I & Type-II error rates** need to be accounted for, unlike Bayesian methods.
 
 
 .. code:: python

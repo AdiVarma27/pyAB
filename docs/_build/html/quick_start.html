@@ -52,7 +52,7 @@
                                           <span class="n">uplift_method</span><span class="o">=</span><span class="s1">&#39;uplift_ratio&#39;</span><span class="p">,</span> <span class="n">num_simulations</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Bayesian A/B test results can extremely useful to <strong>understand &amp; communicate test results</strong> with other stakeholders and answer the main business question: <strong>Which version works the best ?</strong></p>
+<p>Bayesian A/B test results can extremely useful to <strong>understand &amp; communicate test results</strong> with other stakeholders and answers the main business question: <strong>Which version works the best ?</strong></p>
 <p><strong>Output:</strong></p>
 <div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pyAB</span> <span class="n">Summary</span>
 <span class="o">============</span>
@@ -77,7 +77,9 @@
 </div>
 <div class="section" id="frequentist-a-b-test">
 <h2>Frequentist A/B Test<a class="headerlink" href="#frequentist-a-b-test" title="Permalink to this headline">¶</a></h2>
-<p><strong>Let us now run a Frequentist A/B Test and verify if there is a significant difference between two proportions provided the sample sizes and Type-I Error rate.</strong></p>
+<p>Let us now run a Frequentist A/B Test and verify if there is a significant difference between two proportions provided the sample sizes and Type-I Error rate. From above, we know the performance of version-A &amp; version-B <strong>(10 % &amp; 12.5 % Click-through-rates)</strong>, 1000 impressions each.</p>
+<p>We first need to import  <code class="docutils literal notranslate"><span class="pre">ABTestFrequentist</span></code> class and provide type of alternative hypothesis <code class="docutils literal notranslate"><span class="pre">alt_hypothesis</span></code> (<code class="docutils literal notranslate"><span class="pre">'one_tailed'</span></code> or <code class="docutils literal notranslate"><span class="pre">two_tailed</span></code>) &amp; Type-I error rate <code class="docutils literal notranslate"><span class="pre">alpha</span></code> (default = 0.05). Then, we call the <code class="docutils literal notranslate"><span class="pre">conduct_experiment</span></code> method with successful clicks and impressions per version.</p>
+<p>This traditional methodology might be <strong>slightly tricky to communicate</strong>, and <strong>Type-I &amp; Type-II error rates</strong> need to be accounted for, unlike Bayesian methods.</p>
 <div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># import Frequentist class</span>
 <span class="kn">from</span> <span class="nn">pyab.experiments</span> <span class="kn">import</span> <span class="n">ABTestFrequentist</span>
 
