@@ -37,7 +37,7 @@
 <h1>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="bayesian-a-b-test">
 <h2>Bayesian A/B Test<a class="headerlink" href="#bayesian-a-b-test" title="Permalink to this headline">¶</a></h2>
-<p>Let us assume we have two Banner Ads and want to run an AB Test to decide on the final version. We run the test and collect 1000 samples for each version. We observe 100 and 120 clicks for version-A &amp; Version-B respectively (10 % &amp; 12.5 % Click-through-rates). From our previous experience, we know that the average Click-through-rate for our previous Ads was around 12 %.</p>
+<p>Let us assume we have two Banner Ads and want to run an AB Test to decide on the final version. We run the test and collect 1000 samples for each version. We observe 100 and 120 clicks for version-A &amp; Version-B respectively <strong>(10 % &amp; 12.5 % Click-through-rates)</strong>. From our previous experience, we know that the average Click-through-rate for our previous Ads was around 12 %.</p>
 <p>We first need to import  <code class="docutils literal notranslate"><span class="pre">ABTestBayesian</span></code> class and provide prior clicks (<code class="docutils literal notranslate"><span class="pre">success_prior</span></code>) and prior impressions (<code class="docutils literal notranslate"><span class="pre">trials_prior</span></code>). Then, call the <code class="docutils literal notranslate"><span class="pre">conduct_experiment</span></code> method with successful clicks and impressions per version.</p>
 <p>For <code class="docutils literal notranslate"><span class="pre">uplift_method</span></code>, there are three metrics to choose from are <code class="docutils literal notranslate"><span class="pre">'uplift_ratio'</span></code>, <code class="docutils literal notranslate"><span class="pre">'uplift_percent'</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">'uplift_difference'</span></code>. We also choose mcmc <code class="docutils literal notranslate"><span class="pre">num_simulations</span></code>, which samples from Uplift Probability Density function.</p>
 <div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># import Bayesian class</span>
@@ -52,7 +52,7 @@
                                           <span class="n">uplift_method</span><span class="o">=</span><span class="s1">&#39;uplift_ratio&#39;</span><span class="p">,</span> <span class="n">num_simulations</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Bayesian A/B test results can extremely useful to understand &amp; communicate test results with other stakeholders and answer the main Business question: <strong>Which version works the best ?*</strong></p>
+<p>Bayesian A/B test results can extremely useful to <strong>understand &amp; communicate test results</strong> with other stakeholders and answer the main business question: <strong>Which version works the best ?</strong></p>
 <p><strong>Output:</strong></p>
 <div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pyAB</span> <span class="n">Summary</span>
 <span class="o">============</span>

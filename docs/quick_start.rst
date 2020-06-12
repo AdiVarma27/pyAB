@@ -4,7 +4,7 @@ Quick Start
 
 Bayesian A/B Test
 #################
-Let us assume we have two Banner Ads and want to run an AB Test to decide on the final version. We run the test and collect 1000 samples for each version. We observe 100 and 120 clicks for version-A & Version-B respectively (10 % & 12.5 % Click-through-rates). From our previous experience, we know that the average Click-through-rate for our previous Ads was around 12 %. 
+Let us assume we have two Banner Ads and want to run an AB Test to decide on the final version. We run the test and collect 1000 samples for each version. We observe 100 and 120 clicks for version-A & Version-B respectively **(10 % & 12.5 % Click-through-rates)**. From our previous experience, we know that the average Click-through-rate for our previous Ads was around 12 %. 
 
 We first need to import  ``ABTestBayesian`` class and provide prior clicks (``success_prior``) and prior impressions (``trials_prior``). Then, call the ``conduct_experiment`` method with successful clicks and impressions per version.
 
@@ -24,7 +24,7 @@ For ``uplift_method``, there are three metrics to choose from are ``'uplift_rati
                                              success_alt=125, trials_alt=1000, 
                                              uplift_method='uplift_ratio', num_simulations=1000)
 
-Bayesian A/B test results can extremely useful to understand & communicate test results with other stakeholders and answer the main Business question: **Which version works the best ?***
+Bayesian A/B test results can extremely useful to **understand & communicate test results** with other stakeholders and answer the main business question: **Which version works the best ?**
 
 **Output:**
 
