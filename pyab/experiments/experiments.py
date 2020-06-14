@@ -6,7 +6,7 @@ import seaborn as sns
 import scipy.stats as st
 import statsmodels.stats.api as sms
 from statsmodels.stats.power import tt_ind_solve_power
-from pyab.utils import check_data_input, check_t_test, check_valid_parameter
+from pyab.utils import check_valid_input, check_valid_parameter, check_t_test
 
 class ABTestFrequentist:
     """
@@ -70,8 +70,9 @@ class ABTestFrequentist:
         pvalue : float
             probability of obtaining results atleast as extreme as the results actually observed during the test.
         """
-        check_data_input(success_null, trials_null)
-        check_data_input(success_alt, trials_alt)
+
+        check_valid_input(success_null, trials_null)
+        check_valid_input(success_alt, trials_alt)
 
         self.success_null = success_null
         self.trials_null = trials_null
@@ -96,8 +97,8 @@ class ABTestFrequentist:
                     self.pvalue = st.t.cdf(
                         self.stat, df=trials_null + trials_alt - 2)
 
-                self.stat_null_crit_lower = st.t.ppf(self.alpha)
-                self.stat_null_crit_upper = st.t.ppf(1 - self.alpha)
+                self.stat_null_crit_lower = st.t.ppf(self.alpha, df=trials_null + trials_alt - 2)
+                self.stat_null_crit_upper = st.t.ppf(1 - self.alpha, df=trials_null + trials_alt - 2)
 
             # if not t-test
             else:
@@ -236,7 +237,11 @@ class ABTestFrequentist:
         1 - beta : float
             power at given test statistic.
         """
-        dist_alt = st.norm(loc=stat)
+        if self.is_t_test:
+            dist_alt = st.t(loc=stat, df=self.trials_null + self.trials_alt - 2)
+        else:    
+            dist_alt = st.norm(loc=stat)
+
         if self.right_tailed_flag:
             beta = dist_alt.cdf(self.stat_null_crit_upper)
         else:
@@ -283,6 +288,7 @@ class ABTestFrequentist:
         figsize : tuple, default = (9,6)
             matplotlib plot size.
         """
+
         power_curve_ind, power_curve_values = (
             np.array(list(self.power_curve.keys())),
             np.array(list(self.power_curve.values())),
@@ -299,15 +305,15 @@ class ABTestFrequentist:
 
         plot_power_curve_proportion = power_curve_ind[plot_power_curve_ind]
 
+        sns.set_style("whitegrid")
         plt.figure(figsize=figsize)
         plt.title("Power Curve")
-        sns.lineplot(plot_power_curve_proportion, plot_power_curve_values)
-        plt.scatter(self.prop_alt, 1 - self.beta, label='Power at alternate proportion %s' %(str(np.round(1-self.beta,3))))
+        sns.lineplot(plot_power_curve_proportion, plot_power_curve_values, color='blue')
+        plt.scatter(self.prop_alt, 1 - self.beta, color='#0b559f', label='Power at alternate proportion %s' %(str(np.round(1-self.beta,3))))
         plt.legend()
         plt.xlabel("Comparison Proportion")
         plt.ylabel("Power")
-        plt.grid()
-        plt.plot()
+        plt.show()
 
     def print_freq_results(self):
         """
@@ -353,6 +359,8 @@ class ABTestBayesian:
         self.trials_prior = trials_prior
         self.faliure_prior = self.trials_prior - self.success_prior
 
+        check_valid_input(success_prior, trials_prior)
+
     def conduct_experiment(self, success_null, trials_null, success_alt, trials_alt, uplift_method='uplift_percent', num_simulations = 1000):
         """
         Conduct experiment & generate uplift pdf & cdf with provided parameters.
@@ -394,9 +402,8 @@ class ABTestBayesian:
         self.num_simulations = num_simulations
         self.uplift_method = uplift_method
 
-        check_data_input(success_null, trials_null)
-        check_data_input(success_alt, trials_alt)
-
+        check_valid_input(success_null, trials_null)
+        check_valid_input(success_alt, trials_alt)
 
         self.success_null = success_null
         self.trials_null = trials_null
@@ -460,24 +467,31 @@ class ABTestBayesian:
         figsize : tuple, default = (18, 6)
             matplotlib plot size.
         """
+        sns.set_style("whitegrid")
 
         plt.figure(figsize=figsize)
-
         plt.subplot(1, 2, 1)
         plt.title("Uplift Distribution Plot")
-        sns.distplot(self.uplift_distribution)
+        ax = sns.kdeplot(self.uplift_distribution, shade=True, color='black')
+        kde_x, kde_y = ax.lines[0].get_data()
+
+        if self.uplift_method == 'uplift_ratio':
+            cutoff_point = 1
+            cutoff_line = plt.axvline(x=cutoff_point, linestyle='--', color='black')
+        else:
+            cutoff_point = 0
+            cutoff_line = plt.axvline(x=cutoff_point, linestyle='--', color='black')
+
+        ax.fill_between(kde_x, kde_y, where=(kde_x <= cutoff_point), interpolate=True, color='orange', alpha=0.6)
+        ax.fill_between(kde_x, kde_y, where=(kde_x > cutoff_point), interpolate=True, color='lightgreen', alpha=0.6)
+
         plt.xlabel("Uplift")
         plt.ylabel("Density")
-        plt.grid()
-
         plt.subplot(1, 2, 2)
         plt.title("Uplift Cumulative Distribution Plot")
-        kwargs={'cumulative': True}
-        sns.distplot(self.uplift_distribution, hist_kws=kwargs, kde_kws=kwargs, norm_hist=True, kde=False, color='orange')
+        sns.kdeplot(self.uplift_distribution, cumulative=True, color='blue', shade=True)
         plt.xlabel("Cumulative Uplift")
         plt.ylabel("Density")
-        plt.grid()
-
         plt.show()
 
     def print_bayesian_results(self):

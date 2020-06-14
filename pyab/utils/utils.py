@@ -1,7 +1,7 @@
-"""Utility Functions."""
+"""Utility Functions for Frequentist & Bayesian A/B Testing methods."""
 
 
-def check_data_input(numerator, denominator):
+def check_valid_input(numerator, denominator):
     """
     Utility function to check input data consistency.
 
@@ -12,15 +12,15 @@ def check_data_input(numerator, denominator):
     numerator : int
         number of impressions or events.
     """
-    if numerator > denominator:
-        raise ValueError("Found input successful clicks %s greater than trials %s" % (
-            numerator, denominator))
-    elif numerator < 0:
-        raise ValidError("Found input successful clicks less than 0") 
+    if numerator < 0:
+        raise ValueError("Found input successful clicks less than 0") 
     elif denominator <= 0:
-        raise ValidError("Found input trials less than or equal to 0")
+        raise ValueError("Found input trials less than or equal to 0")
     elif not isinstance(numerator, int) or not isinstance(denominator, int):
         raise ValueError("Expected input success and trials not type int")
+    elif numerator > denominator:
+        raise ValueError("Found input successful clicks %s greater than trials %s" % (
+            numerator, denominator))
 
 def check_valid_parameter(parameter):
     """
@@ -31,8 +31,8 @@ def check_valid_parameter(parameter):
     parameter : float
         Type-I or Type-II error rate.
     """
-    if parameter < 0 and parameter > 1:
-        raise ValueError("Found input parameter %s less than 0 or greater than 1" %(parameter))
+    if parameter < 0 or parameter > 1:
+        raise ValueError("Found input parameter less than 0 or greater than 1")
 
 def check_t_test(trials_a, trials_b):
     """
