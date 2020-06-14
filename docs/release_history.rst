@@ -6,4 +6,4 @@ Version 0.0.1
 #############
 
 - ABTestBayesian, ABTestFrequentist classes in experiments module.
-- Base utility functions.
+- Base utility functions, test cases.
