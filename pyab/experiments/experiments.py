@@ -68,122 +68,122 @@ class ABTestFrequentist:
             pvalue : float
                 probability of obtaining results atleast as extreme as the results actually observed during the test.
             """
-        check_data_input(success_null, trials_null)
-        check_data_input(success_alt, trials_alt)
+            check_data_input(success_null, trials_null)
+            check_data_input(success_alt, trials_alt)
 
-        self.success_null = success_null
-        self.trials_null = trials_null
-        self.prop_null = success_null / trials_null
-        self.success_alt = success_alt
-        self.trials_alt = trials_alt
-        self.prop_alt = success_alt / trials_alt
+            self.success_null = success_null
+            self.trials_null = trials_null
+            self.prop_null = success_null / trials_null
+            self.success_alt = success_alt
+            self.trials_alt = trials_alt
+            self.prop_alt = success_alt / trials_alt
 
-        self.stat = self.calculate_stat(self.prop_alt)
+            self.stat = self.calculate_stat(self.prop_alt)
 
-        self.is_t_test = True if check_t_test(trials_null, trials_alt) else False
+            self.is_t_test = True if check_t_test(trials_null, trials_alt) else False
 
-        # check for alt hypothesis
-        if self.alt_hypothesis == 'one_tailed':
+            # check for alt hypothesis
+            if self.alt_hypothesis == 'one_tailed':
 
-            # check if t-test
-            if self.is_t_test:
-                if self.right_tailed_flag:
-                    self.pvalue = st.t.cdf(-self.stat,
-                                      df=trials_null + trials_alt - 2)
+                # check if t-test
+                if self.is_t_test:
+                    if self.right_tailed_flag:
+                        self.pvalue = st.t.cdf(-self.stat,
+                                        df=trials_null + trials_alt - 2)
+                    else:
+                        self.pvalue = st.t.cdf(
+                            self.stat, df=trials_null + trials_alt - 2)
+
+                    self.stat_null_crit_lower = st.t.ppf(self.alpha)
+                    self.stat_null_crit_upper = st.t.ppf(1 - self.alpha)
+
+                # if not t-test
                 else:
-                    self.pvalue = st.t.cdf(
-                        self.stat, df=trials_null + trials_alt - 2)
+                    if self.right_tailed_flag:
+                        self.pvalue = st.norm.cdf(-self.stat)
+                    else:
+                        self.pvalue = st.norm.cdf(self.stat)
 
-                self.stat_null_crit_lower = st.t.ppf(self.alpha)
-                self.stat_null_crit_upper = st.t.ppf(1 - self.alpha)
+                    self.stat_null_crit_lower = st.norm.ppf(self.alpha)
+                    self.stat_null_crit_upper = st.norm.ppf(1 - self.alpha)
 
-            # if not t-test
-            else:
+                self.conf_int_null_crit = (
+                    self.prop_null + self.stat_null_crit_lower
+                    * np.sqrt(self.prop_null * (1 - self.prop_null)
+                            * (1 / trials_null)),
+                    self.prop_null
+                    + self.stat_null_crit_upper
+                    * np.sqrt(self.prop_null * (1 - self.prop_null)
+                            * (1 / trials_null))
+                )
+
+                self.beta = 1 - self.calculate_power(self.stat)
+
                 if self.right_tailed_flag:
-                    self.pvalue = st.norm.cdf(-self.stat)
+                    self.power_curve = {
+                        temp_moving_prop: self.calculate_power(
+                            self.calculate_stat(temp_moving_prop)
+                        )
+                        for temp_moving_prop in np.arange(self.prop_null, 1.005, 0.005)
+                    }
+
                 else:
-                    self.pvalue = st.norm.cdf(self.stat)
+                    self.power_curve = {
+                        temp_moving_prop: self.calculate_power(
+                            self.calculate_stat(temp_moving_prop)
+                        )
+                        for temp_moving_prop in np.arange(0, self.prop_null + 0.005, 0.005)
+                    }
 
-                self.stat_null_crit_lower = st.norm.ppf(self.alpha)
-                self.stat_null_crit_upper = st.norm.ppf(1 - self.alpha)
-
-            self.conf_int_null_crit = (
-                self.prop_null + self.stat_null_crit_lower
-                * np.sqrt(self.prop_null * (1 - self.prop_null)
-                          * (1 / trials_null)),
-                self.prop_null
-                + self.stat_null_crit_upper
-                * np.sqrt(self.prop_null * (1 - self.prop_null)
-                          * (1 / trials_null))
-            )
-
-            self.beta = 1 - self.calculate_power(self.stat)
-
-            if self.right_tailed_flag:
-                self.power_curve = {
-                    temp_moving_prop: self.calculate_power(
-                        self.calculate_stat(temp_moving_prop)
-                    )
-                    for temp_moving_prop in np.arange(self.prop_null, 1.005, 0.005)
-                }
-
+            # if two-tailed
             else:
-                self.power_curve = {
-                    temp_moving_prop: self.calculate_power(
-                        self.calculate_stat(temp_moving_prop)
-                    )
-                    for temp_moving_prop in np.arange(0, self.prop_null + 0.005, 0.005)
-                }
+                # check if t-test
+                if self.is_t_test:
+                    if self.right_tailed_flag:
+                        self.pvalue = st.t.cdf(-self.stat,
+                                        df=trials_null + trials_alt - 2) * 2
+                    else:
+                        self.pvalue = st.t.cdf(
+                            self.stat, df=trials_null + trials_alt - 2) * 2
 
-        # if two-tailed
-        else:
-            # check if t-test
-            if self.is_t_test:
+                    self.stat_null_crit_lower = st.t.ppf(self.alpha / 2)
+                    self.stat_null_crit_upper = st.t.ppf(1 - self.alpha / 2)
+
+                # if not t-test
+                else:
+                    if self.right_tailed_flag:
+                        self.pvalue = st.norm.cdf(-self.stat) * 2
+                    else:
+                        self.pvalue = st.norm.cdf(self.stat) * 2
+
+                    self.stat_null_crit_lower = st.norm.ppf(self.alpha / 2)
+                    self.stat_null_crit_upper = st.norm.ppf(1 - self.alpha / 2)
+
+                # calculate conf int
+                self.conf_int_null_crit = (
+                    self.prop_null + self.stat_null_crit_lower * np.sqrt(self.prop_null * (1 - self.prop_null) * (1 / trials_null)),
+                    self.prop_null + self.stat_null_crit_upper * np.sqrt(self.prop_null * (1 - self.prop_null) * (1 / trials_null)),
+                )
+
+                self.beta = 1 - self.calculate_power(self.stat)
+
                 if self.right_tailed_flag:
-                    self.pvalue = st.t.cdf(-self.stat,
-                                      df=trials_null + trials_alt - 2) * 2
+                    self.power_curve = {
+                        temp_moving_prop: self.calculate_power(
+                            self.calculate_stat(temp_moving_prop)
+                        )
+                        for temp_moving_prop in np.arange(0, 1.005, 0.005)
+                    }
+
                 else:
-                    self.pvalue = st.t.cdf(
-                        self.stat, df=trials_null + trials_alt - 2) * 2
+                    self.power_curve = {
+                        temp_moving_prop: self.calculate_power(
+                            self.calculate_stat(temp_moving_prop)
+                        )
+                        for temp_moving_prop in np.arange(0, 1.005, 0.005)
+                    }
 
-                self.stat_null_crit_lower = st.t.ppf(self.alpha / 2)
-                self.stat_null_crit_upper = st.t.ppf(1 - self.alpha / 2)
-
-            # if not t-test
-            else:
-                if self.right_tailed_flag:
-                    self.pvalue = st.norm.cdf(-self.stat) * 2
-                else:
-                    self.pvalue = st.norm.cdf(self.stat) * 2
-
-                self.stat_null_crit_lower = st.norm.ppf(self.alpha / 2)
-                self.stat_null_crit_upper = st.norm.ppf(1 - self.alpha / 2)
-
-            # calculate conf int
-            self.conf_int_null_crit = (
-                self.prop_null + self.stat_null_crit_lower * np.sqrt(self.prop_null * (1 - self.prop_null) * (1 / trials_null)),
-                self.prop_null + self.stat_null_crit_upper * np.sqrt(self.prop_null * (1 - self.prop_null) * (1 / trials_null)),
-            )
-
-            self.beta = 1 - self.calculate_power(self.stat)
-
-            if self.right_tailed_flag:
-                self.power_curve = {
-                    temp_moving_prop: self.calculate_power(
-                        self.calculate_stat(temp_moving_prop)
-                    )
-                    for temp_moving_prop in np.arange(0, 1.005, 0.005)
-                }
-
-            else:
-                self.power_curve = {
-                    temp_moving_prop: self.calculate_power(
-                        self.calculate_stat(temp_moving_prop)
-                    )
-                    for temp_moving_prop in np.arange(0, 1.005, 0.005)
-                }
-
-        self.print_freq_results()
+            self.print_freq_results()
 
         return self.stat, self.pvalue
 
