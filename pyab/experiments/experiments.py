@@ -110,9 +110,11 @@ class ABTestFrequentist:
                 self.stat_null_crit_lower = st.norm.ppf(self.alpha)
                 self.stat_null_crit_upper = st.norm.ppf(1 - self.alpha)
 
-            self.conf_int_null_crit = (self.prop_null + self.stat_null_crit_lower * np.sqrt(self.prop_null * (1 - self.prop_null)
+            self.conf_int_null_crit = (self.prop_null + self.stat_null_crit_lower * \
+                np.sqrt(self.prop_null * (1 - self.prop_null)
                           * (1 / trials_null)),
-                self.prop_null + self.stat_null_crit_upper * np.sqrt(self.prop_null * (1 - self.prop_null)
+                self.prop_null + self.stat_null_crit_upper * np.sqrt(self.prop_null * \
+                    (1 - self.prop_null)
                           * (1 / trials_null))
             )
 
@@ -385,7 +387,8 @@ class ABTestBayesian:
 
         check_valid_input(success_prior, trials_prior)
 
-    def conduct_experiment(self, success_null, trials_null, success_alt, trials_alt, uplift_method='uplift_percent', num_simulations=1000):
+    def conduct_experiment(self, success_null, trials_null, success_alt, trials_alt,
+        uplift_method='uplift_percent', num_simulations=1000):
         """
         Conduct experiment & generate uplift distributions.
 
@@ -481,9 +484,11 @@ class ABTestBayesian:
             percentage area above threshold.
         """
 
-        beta_mcmc_null = st.beta.rvs(self.success_posterior_null, self.faliure_posterior_null, size=self.num_simulations)
+        beta_mcmc_null = st.beta.rvs(self.success_posterior_null, self.faliure_posterior_null,
+            size=self.num_simulations)
 
-        beta_mcmc_alt = st.beta.rvs(self.success_posterior_alt, self.faliure_posterior_alt, size=self.num_simulations)
+        beta_mcmc_alt = st.beta.rvs(self.success_posterior_alt, self.faliure_posterior_alt,
+            size=self.num_simulations)
 
         if self.uplift_method == 'uplift_percent':
             uplift_dist = (beta_mcmc_alt - beta_mcmc_null) / beta_mcmc_null
@@ -524,8 +529,10 @@ class ABTestBayesian:
             cutoff_point = 0
             cutoff_line = plt.axvline(x=cutoff_point, linestyle='--', color='black')
 
-        ax.fill_between(kde_x, kde_y, where=(kde_x <= cutoff_point), interpolate=True, color='orange', alpha=0.6)
-        ax.fill_between(kde_x, kde_y, where=(kde_x > cutoff_point), interpolate=True, color='lightgreen', alpha=0.6)
+        ax.fill_between(kde_x, kde_y, where=(kde_x <= cutoff_point), interpolate=True,
+            color='orange', alpha=0.6)
+        ax.fill_between(kde_x, kde_y, where=(kde_x > cutoff_point), interpolate=True,
+            color='lightgreen', alpha=0.6)
 
         plt.xlabel("Uplift")
         plt.ylabel("Density")
