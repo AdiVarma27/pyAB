@@ -200,6 +200,33 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="pyab.experiments.ABTestFrequentist.conduct_experiment">
+<code class="descname">conduct_experiment</code><span class="sig-paren">(</span><em>success_null</em>, <em>trials_null</em>, <em>success_alt</em>, <em>trials_alt</em><span class="sig-paren">)</span><a class="headerlink" href="#pyab.experiments.ABTestFrequentist.conduct_experiment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Conduct experiment &amp; generate power curve with provided parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>success_null</strong> (<em>int</em>) -- number of successful clicks or successful events (Version-A).</li>
+<li><strong>trials_null</strong> (<em>int</em>) -- number of impressions or events (Version-A).</li>
+<li><strong>success_alt</strong> (<em>int</em>) -- number of successful clicks or successful events (Version-B).</li>
+<li><strong>trials_alt</strong> (<em>int</em>) -- number of impressions or events (Version-B).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>stat</strong> (<em>float</em>) -- z or t statistic.</li>
+<li><strong>pvalue</strong> (<em>float</em>) -- probability of obtaining results atleast as extreme as the results actually observed during the test.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="pyab.experiments.ABTestFrequentist.get_sample_size">
 <code class="descname">get_sample_size</code><span class="sig-paren">(</span><em>beta=0.1</em><span class="sig-paren">)</span><a class="headerlink" href="#pyab.experiments.ABTestFrequentist.get_sample_size" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate required sample size per group to obtain provided beta.</p>
