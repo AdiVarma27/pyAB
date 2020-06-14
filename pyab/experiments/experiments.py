@@ -446,15 +446,15 @@ class ABTestBayesian:
 
         if self.uplift_method == 'uplift_percent':
             uplift_distribution= (beta_mcmc_alt - beta_mcmc_null)/beta_mcmc_null
-            uplift_area = uplift_distribution[uplift_distribution >= 0].sum()/np.abs(uplift_distribution).sum()
+            uplift_area = len(uplift_distribution[uplift_distribution >= 0])/len(np.abs(uplift_distribution))
 
         elif self.uplift_method == 'uplift_ratio':
             uplift_distribution = beta_mcmc_alt/beta_mcmc_null
-            uplift_area = uplift_distribution[uplift_distribution >= 1].sum()/np.abs(uplift_distribution).sum()
+            uplift_area = len(uplift_distribution[uplift_distribution >= 1])/len(np.abs(uplift_distribution))
 
         elif self.uplift_method == 'uplift_difference':
             uplift_distribution = beta_mcmc_alt - beta_mcmc_null
-            uplift_area = uplift_distribution[uplift_distribution >= 0].sum()/np.abs(uplift_distribution).sum()
+            uplift_area = len(uplift_distribution[uplift_distribution >= 0])/len(np.abs(uplift_distribution))
         
         return uplift_distribution, uplift_area
         
