@@ -12,9 +12,3 @@ Experiments
 
 .. autoclass:: pyab.experiments.ABTestFrequentist
     :members:
-
-Utils
-#####
-
-.. automodule:: pyab.utils
-    :members:
