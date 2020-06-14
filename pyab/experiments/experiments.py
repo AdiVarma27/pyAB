@@ -82,13 +82,9 @@ class ABTestFrequentist:
         self.prop_alt = success_alt / trials_alt
 
         self.stat = self.calculate_stat(self.prop_alt)
-
         self.is_t_test = True if check_t_test(trials_null, trials_alt) else False
 
-        # check for alt hypothesis
         if self.alt_hypothesis == 'one_tailed':
-
-            # check if t-test
             if self.is_t_test:
                 if self.right_tailed_flag:
                     self.pvalue = st.t.cdf(-self.stat,
@@ -100,7 +96,6 @@ class ABTestFrequentist:
                 self.stat_null_crit_lower = st.t.ppf(self.alpha, df=trials_null + trials_alt - 2)
                 self.stat_null_crit_upper = st.t.ppf(1 - self.alpha, df=trials_null + trials_alt - 2)
 
-            # if not t-test
             else:
                 if self.right_tailed_flag:
                     self.pvalue = st.norm.cdf(-self.stat)
@@ -137,10 +132,7 @@ class ABTestFrequentist:
                     )
                     for temp_moving_prop in np.arange(0, self.prop_null + 0.005, 0.005)
                 }
-
-        # if two-tailed
         else:
-            # check if t-test
             if self.is_t_test:
                 if self.right_tailed_flag:
                     self.pvalue = st.t.cdf(-self.stat,
@@ -152,7 +144,6 @@ class ABTestFrequentist:
                 self.stat_null_crit_lower = st.t.ppf(self.alpha / 2)
                 self.stat_null_crit_upper = st.t.ppf(1 - self.alpha / 2)
 
-            # if not t-test
             else:
                 if self.right_tailed_flag:
                     self.pvalue = st.norm.cdf(-self.stat) * 2
@@ -162,7 +153,6 @@ class ABTestFrequentist:
                 self.stat_null_crit_lower = st.norm.ppf(self.alpha / 2)
                 self.stat_null_crit_upper = st.norm.ppf(1 - self.alpha / 2)
 
-            # calculate conf int
             self.conf_int_null_crit = (
                 self.prop_null + self.stat_null_crit_lower * np.sqrt(self.prop_null * (1 - self.prop_null) * (1 / trials_null)),
                 self.prop_null + self.stat_null_crit_upper * np.sqrt(self.prop_null * (1 - self.prop_null) * (1 / trials_null)),
@@ -204,6 +194,7 @@ class ABTestFrequentist:
         stat : float
             z or t statistic.
         """
+
         diff_prop = prop_alt - self.prop_null
 
         self.right_tailed_flag = True if diff_prop >= 0 else False
@@ -237,6 +228,7 @@ class ABTestFrequentist:
         1 - beta : float
             power at given test statistic.
         """
+
         if self.is_t_test:
             dist_alt = st.t(loc=stat, df=self.trials_null + self.trials_alt - 2)
         else:    
@@ -263,6 +255,7 @@ class ABTestFrequentist:
         n : int
             sample size per group.
         """
+
         es = sms.proportion_effectsize(self.prop_null, self.prop_alt)
 
         if self.alt_hypothesis == 'two_tailed':
@@ -334,6 +327,7 @@ class ABTestFrequentist:
         print("p-value: %s" % (np.round(self.pvalue, 3)))
         print("Type-II Error: %s" % (np.round(self.beta, 3)))
         print("Power: %s\n" % (np.round(1-self.beta, 3)))
+        
         if is_significant:
             print("There is a statistically significant difference in proportions of two variants.\n")
         else:
@@ -392,7 +386,9 @@ class ABTestBayesian:
             * 'uplift_difference':
                 uplift difference between variant-b & variant-a
         """
+
         all_uplift_methods = ['uplift_percent', 'uplift_ratio', 'uplift_difference']
+
         if uplift_method not in all_uplift_methods:
             raise ValueError(
                 "ABTestBayesian class supports uplift methods in %s, got %s"
@@ -441,6 +437,7 @@ class ABTestBayesian:
         uplift_area : float
             percentage area above threshold.
         """
+
         beta_mcmc_null = st.beta.rvs(self.success_posterior_null, self.faliure_posterior_null, size=self.num_simulations)
         beta_mcmc_alt = st.beta.rvs(self.success_posterior_alt, self.faliure_posterior_alt, size=self.num_simulations)
 
@@ -467,6 +464,7 @@ class ABTestBayesian:
         figsize : tuple, default = (18, 6)
             matplotlib plot size.
         """
+
         sns.set_style("whitegrid")
 
         plt.figure(figsize=figsize)
