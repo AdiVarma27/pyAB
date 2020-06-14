@@ -33,18 +33,23 @@ class ABTestFrequentist:
         self.stat = None
         self.stat_null_crit_upper = None
         self.stat_null_crit_lower = None
-        
+
         all_alt_hypothesis = ['one_tailed', 'two_tailed']
 
         check_valid_parameter(alpha)
-        
+
         if alt_hypothesis not in all_alt_hypothesis:
             raise ValueError(
                 "ABTestFrequentist class supports hypothesis in %s, got %s"
                 % (all_alt_hypothesis, alt_hypothesis)
             )
 
-    def conduct_experiment(self, success_null, trials_null, success_alt, trials_alt):
+    def conduct_experiment(
+            self,
+            success_null,
+            trials_null,
+            success_alt,
+            trials_alt):
         """
         Conduct experiment & generate power curve with provided parameters.
 
@@ -68,7 +73,8 @@ class ABTestFrequentist:
             z or t statistic.
 
         pvalue : float
-            probability of obtaining results atleast as extreme as the results actually observed during the test.
+            probability of obtaining results atleast as extreme as the results 
+            actually observed during the test.
         """
 
         check_valid_input(success_null, trials_null)
@@ -82,19 +88,22 @@ class ABTestFrequentist:
         self.prop_alt = success_alt / trials_alt
 
         self.stat = self.calculate_stat(self.prop_alt)
-        self.is_t_test = True if check_t_test(trials_null, trials_alt) else False
+        self.is_t_test = True if check_t_test(
+            trials_null, trials_alt) else False
 
         if self.alt_hypothesis == 'one_tailed':
             if self.is_t_test:
                 if self.right_tailed_flag:
                     self.pvalue = st.t.cdf(-self.stat,
-                                    df=trials_null + trials_alt - 2)
+                                           df=trials_null + trials_alt - 2)
                 else:
                     self.pvalue = st.t.cdf(
                         self.stat, df=trials_null + trials_alt - 2)
 
-                self.stat_null_crit_lower = st.t.ppf(self.alpha, df=trials_null + trials_alt - 2)
-                self.stat_null_crit_upper = st.t.ppf(1 - self.alpha, df=trials_null + trials_alt - 2)
+                self.stat_null_crit_lower = st.t.ppf(
+                    self.alpha, df=trials_null + trials_alt - 2)
+                self.stat_null_crit_upper = st.t.ppf(
+                    1 - self.alpha, df=trials_null + trials_alt - 2)
 
             else:
                 if self.right_tailed_flag:
@@ -108,11 +117,11 @@ class ABTestFrequentist:
             self.conf_int_null_crit = (
                 self.prop_null + self.stat_null_crit_lower
                 * np.sqrt(self.prop_null * (1 - self.prop_null)
-                        * (1 / trials_null)),
+                          * (1 / trials_null)),
                 self.prop_null
                 + self.stat_null_crit_upper
                 * np.sqrt(self.prop_null * (1 - self.prop_null)
-                        * (1 / trials_null))
+                          * (1 / trials_null))
             )
 
             self.beta = 1 - self.calculate_power(self.stat)
@@ -122,7 +131,8 @@ class ABTestFrequentist:
                     temp_moving_prop: self.calculate_power(
                         self.calculate_stat(temp_moving_prop)
                     )
-                    for temp_moving_prop in np.arange(self.prop_null, 1.005, 0.005)
+                    for temp_moving_prop in \
+                        np.arange(self.prop_null, 1.005, 0.005)
                 }
 
             else:
@@ -130,13 +140,14 @@ class ABTestFrequentist:
                     temp_moving_prop: self.calculate_power(
                         self.calculate_stat(temp_moving_prop)
                     )
-                    for temp_moving_prop in np.arange(0, self.prop_null + 0.005, 0.005)
+                    for temp_moving_prop in \
+                        np.arange(0, self.prop_null + 0.005, 0.005)
                 }
         else:
             if self.is_t_test:
                 if self.right_tailed_flag:
                     self.pvalue = st.t.cdf(-self.stat,
-                                    df=trials_null + trials_alt - 2) * 2
+                                           df=trials_null + trials_alt - 2) * 2
                 else:
                     self.pvalue = st.t.cdf(
                         self.stat, df=trials_null + trials_alt - 2) * 2
@@ -153,10 +164,19 @@ class ABTestFrequentist:
                 self.stat_null_crit_lower = st.norm.ppf(self.alpha / 2)
                 self.stat_null_crit_upper = st.norm.ppf(1 - self.alpha / 2)
 
-            self.conf_int_null_crit = (
-                self.prop_null + self.stat_null_crit_lower * np.sqrt(self.prop_null * (1 - self.prop_null) * (1 / trials_null)),
-                self.prop_null + self.stat_null_crit_upper * np.sqrt(self.prop_null * (1 - self.prop_null) * (1 / trials_null)),
-            )
+            self.conf_int_null_crit = (self.prop_null +
+                                       self.stat_null_crit_lower *
+                                       np.sqrt(self.prop_null *
+                                               (1 -
+                                                self.prop_null) *
+                                               (1 /
+                                                trials_null)), self.prop_null +
+                                       self.stat_null_crit_upper *
+                                       np.sqrt(self.prop_null *
+                                               (1 -
+                                                self.prop_null) *
+                                               (1 /
+                                                   trials_null)), )
 
             self.beta = 1 - self.calculate_power(self.stat)
 
@@ -213,7 +233,7 @@ class ABTestFrequentist:
         stat = diff_prop / np.sqrt(variance)
 
         return stat
-    
+
     def calculate_power(self, stat):
         """
         Calculate power (1-beta) at given test statistics.
@@ -230,8 +250,12 @@ class ABTestFrequentist:
         """
 
         if self.is_t_test:
-            dist_alt = st.t(loc=stat, df=self.trials_null + self.trials_alt - 2)
-        else:    
+            dist_alt = st.t(
+                loc=stat,
+                df=self.trials_null +
+                self.trials_alt -
+                2)
+        else:
             dist_alt = st.norm(loc=stat)
 
         if self.right_tailed_flag:
@@ -267,10 +291,12 @@ class ABTestFrequentist:
             )
         else:
             n = tt_ind_solve_power(
-                effect_size=es, alpha=self.alpha, power=1 - beta, alternative='smaller'
-            )
+                effect_size=es,
+                alpha=self.alpha,
+                power=1 - beta,
+                alternative='smaller')
 
-        return int(np.round(n,0))
+        return int(np.round(n, 0))
 
     def plot_power_curve(self, figsize=(9, 6)):
         """
@@ -301,8 +327,21 @@ class ABTestFrequentist:
         sns.set_style("whitegrid")
         plt.figure(figsize=figsize)
         plt.title("Power Curve")
-        sns.lineplot(plot_power_curve_proportion, plot_power_curve_values, color='blue')
-        plt.scatter(self.prop_alt, 1 - self.beta, color='#0b559f', label='Power at alternate proportion %s' %(str(np.round(1-self.beta,3))))
+        sns.lineplot(
+            plot_power_curve_proportion,
+            plot_power_curve_values,
+            color='blue')
+        plt.scatter(
+            self.prop_alt,
+            1 -
+            self.beta,
+            color='#0b559f',
+            label='Power at alternate proportion %s' %
+            (str(
+                np.round(
+                    1 -
+                    self.beta,
+                    3))))
         plt.legend()
         plt.xlabel("Comparison Proportion")
         plt.ylabel("Power")
@@ -319,21 +358,29 @@ class ABTestFrequentist:
 
         print("pyAB Summary\n============\n")
         print("Test Parameters\n_______________\n")
-        print("Variant A: Success Rate %s, Sample Size %s" %(self.prop_null, self.trials_null))
-        print("Variant B: Success Rate %s, Sample Size %s" %(self.prop_alt, self.trials_alt))
-        print("Type-I Error: %s, %s test\n" %(self.alpha, self.alt_hypothesis))
+        print("Variant A: Success Rate %s, Sample Size %s" %
+              (self.prop_null, self.trials_null))
+        print(
+            "Variant B: Success Rate %s, Sample Size %s" %
+            (self.prop_alt, self.trials_alt))
+        print(
+            "Type-I Error: %s, %s test\n" %
+            (self.alpha, self.alt_hypothesis))
         print("Test Results\n____________\n")
         print("Test Stat: %s" % (np.round(self.stat, 3)))
         print("p-value: %s" % (np.round(self.pvalue, 3)))
         print("Type-II Error: %s" % (np.round(self.beta, 3)))
-        print("Power: %s\n" % (np.round(1-self.beta, 3)))
-        
+        print("Power: %s\n" % (np.round(1 - self.beta, 3)))
+
         if is_significant:
-            print("There is a statistically significant difference in proportions of two variants.\n")
+            print(
+                "There is a statistically significant difference in proportions of two variants.\n")
         else:
-            print("There is no statistically significant difference in proportions of two variants.\n")
+            print(
+                "There is no statistically significant difference in proportions of two variants.\n")
 
         self.plot_power_curve()
+
 
 class ABTestBayesian:
     """
@@ -347,17 +394,25 @@ class ABTestBayesian:
     trials_prior : int
         Number of trials from prior.
     """
+
     def __init__(self, success_prior, trials_prior):
-    
+
         self.success_prior = success_prior
         self.trials_prior = trials_prior
         self.faliure_prior = self.trials_prior - self.success_prior
 
         check_valid_input(success_prior, trials_prior)
 
-    def conduct_experiment(self, success_null, trials_null, success_alt, trials_alt, uplift_method='uplift_percent', num_simulations = 1000):
+    def conduct_experiment(
+            self,
+            success_null,
+            trials_null,
+            success_alt,
+            trials_alt,
+            uplift_method='uplift_percent',
+            num_simulations=1000):
         """
-        Conduct experiment & generate uplift pdf & cdf with provided parameters.
+        Conduct experiment & generate uplift distributions.
 
         Parameters
         ----------
@@ -387,7 +442,10 @@ class ABTestBayesian:
                 uplift difference between variant-b & variant-a
         """
 
-        all_uplift_methods = ['uplift_percent', 'uplift_ratio', 'uplift_difference']
+        all_uplift_methods = [
+            'uplift_percent',
+            'uplift_ratio',
+            'uplift_difference']
 
         if uplift_method not in all_uplift_methods:
             raise ValueError(
@@ -416,18 +474,28 @@ class ABTestBayesian:
         self.success_posterior_alt = self.success_prior + self.success_alt
         self.faliure_posterior_alt = self.faliure_prior + faliure_alt
 
-        beta_x = np.arange(0,1.005,0.005)
-        beta_prior_pdf = st.beta.pdf(beta_x, self.success_prior, self.faliure_prior)
-        beta_null_pdf = st.beta.pdf(beta_x, self.success_posterior_null, self.faliure_posterior_null)
-        beta_alt_pdf = st.beta.pdf(beta_x, self.success_posterior_alt, self.faliure_posterior_alt)
+        beta_x = np.arange(0, 1.005, 0.005)
 
-        self.uplift_distribution, self.uplift_area = self.calculate_uplift_area()
+        beta_prior_pdf = st.beta.pdf(
+            beta_x, self.success_prior, self.faliure_prior)
+
+        beta_null_pdf = st.beta.pdf(
+            beta_x,
+            self.success_posterior_null,
+            self.faliure_posterior_null)
+
+        beta_alt_pdf = st.beta.pdf(
+            beta_x,
+            self.success_posterior_alt,
+            self.faliure_posterior_alt)
+
+        self.uplift_dist, self.uplift_area = self.calculate_uplift_area()
 
         self.print_bayesian_results()
 
     def calculate_uplift_area(self):
         """
-        Calculate Uplift pdf & area beyond threshold with provided test parameters.
+        Calculate Uplift pdf & area beyond threshold.
 
         Returns
         -------
@@ -438,23 +506,33 @@ class ABTestBayesian:
             percentage area above threshold.
         """
 
-        beta_mcmc_null = st.beta.rvs(self.success_posterior_null, self.faliure_posterior_null, size=self.num_simulations)
-        beta_mcmc_alt = st.beta.rvs(self.success_posterior_alt, self.faliure_posterior_alt, size=self.num_simulations)
+        beta_mcmc_null = st.beta.rvs(
+            self.success_posterior_null,
+            self.faliure_posterior_null,
+            size=self.num_simulations)
+        beta_mcmc_alt = st.beta.rvs(
+            self.success_posterior_alt,
+            self.faliure_posterior_alt,
+            size=self.num_simulations)
 
         if self.uplift_method == 'uplift_percent':
-            uplift_distribution= (beta_mcmc_alt - beta_mcmc_null)/beta_mcmc_null
-            uplift_area = len(uplift_distribution[uplift_distribution >= 0])/len(np.abs(uplift_distribution))
+            uplift_dist = (
+                beta_mcmc_alt - beta_mcmc_null) / beta_mcmc_null
+            uplift_area = len(
+                uplift_dist[uplift_dist >= 0]) / len(np.abs(uplift_dist))
 
         elif self.uplift_method == 'uplift_ratio':
-            uplift_distribution = beta_mcmc_alt/beta_mcmc_null
-            uplift_area = len(uplift_distribution[uplift_distribution >= 1])/len(np.abs(uplift_distribution))
+            uplift_dist = beta_mcmc_alt / beta_mcmc_null
+            uplift_area = len(
+                uplift_dist[uplift_dist >= 1]) / len(np.abs(uplift_dist))
 
         elif self.uplift_method == 'uplift_difference':
-            uplift_distribution = beta_mcmc_alt - beta_mcmc_null
-            uplift_area = len(uplift_distribution[uplift_distribution >= 0])/len(np.abs(uplift_distribution))
-        
-        return uplift_distribution, uplift_area
-        
+            uplift_dist = beta_mcmc_alt - beta_mcmc_null
+            uplift_area = len(
+                uplift_dist[uplift_dist >= 0]) / len(np.abs(uplift_dist))
+
+        return uplift_dist, uplift_area
+
     def plot_uplift_distributions(self, figsize=(18, 6)):
         """
         Plot uplift pdf & cdf for provided experiment parameters.
@@ -470,24 +548,44 @@ class ABTestBayesian:
         plt.figure(figsize=figsize)
         plt.subplot(1, 2, 1)
         plt.title("Uplift Distribution Plot")
-        ax = sns.kdeplot(self.uplift_distribution, shade=True, color='black')
+        ax = sns.kdeplot(self.uplift_dist, shade=True, color='black')
         kde_x, kde_y = ax.lines[0].get_data()
 
         if self.uplift_method == 'uplift_ratio':
             cutoff_point = 1
-            cutoff_line = plt.axvline(x=cutoff_point, linestyle='--', color='black')
+            cutoff_line = plt.axvline(
+                x=cutoff_point, linestyle='--', color='black')
         else:
             cutoff_point = 0
-            cutoff_line = plt.axvline(x=cutoff_point, linestyle='--', color='black')
+            cutoff_line = plt.axvline(
+                x=cutoff_point, linestyle='--', color='black')
 
-        ax.fill_between(kde_x, kde_y, where=(kde_x <= cutoff_point), interpolate=True, color='orange', alpha=0.6)
-        ax.fill_between(kde_x, kde_y, where=(kde_x > cutoff_point), interpolate=True, color='lightgreen', alpha=0.6)
+        ax.fill_between(
+            kde_x,
+            kde_y,
+            where=(
+                kde_x <= cutoff_point),
+            interpolate=True,
+            color='orange',
+            alpha=0.6)
+        ax.fill_between(
+            kde_x,
+            kde_y,
+            where=(
+                kde_x > cutoff_point),
+            interpolate=True,
+            color='lightgreen',
+            alpha=0.6)
 
         plt.xlabel("Uplift")
         plt.ylabel("Density")
         plt.subplot(1, 2, 2)
         plt.title("Uplift Cumulative Distribution Plot")
-        sns.kdeplot(self.uplift_distribution, cumulative=True, color='blue', shade=True)
+        sns.kdeplot(
+            self.uplift_dist,
+            cumulative=True,
+            color='blue',
+            shade=True)
         plt.xlabel("Cumulative Uplift")
         plt.ylabel("Density")
         plt.show()
@@ -499,18 +597,24 @@ class ABTestBayesian:
 
         print("pyAB Summary\n============\n")
         print("Test Parameters\n_______________\n")
-        print("Variant A: Successful Trials %s, Sample Size %s" %(self.success_null, self.trials_null))
-        print("Variant B: Successful Trials %s, Sample Size %s" %(self.success_alt, self.trials_alt))
-        print("Prior: Successful Trials %s, Sample Size %s\n" %(self.success_prior, self.trials_prior))
+        print("Variant A: Successful Trials %s, Sample Size %s" %
+              (self.success_null, self.trials_null))
+        print("Variant B: Successful Trials %s, Sample Size %s" %
+              (self.success_alt, self.trials_alt))
+        print("Prior: Successful Trials %s, Sample Size %s\n" %
+              (self.success_prior, self.trials_prior))
         print("Test Results\n____________\n")
-        print("Evaluation Metric: %s" %(self.uplift_method))
-        print("Number of mcmc simulations: %s\n" %(self.num_simulations))
+        print("Evaluation Metric: %s" % (self.uplift_method))
+        print("Number of mcmc simulations: %s\n" % (self.num_simulations))
 
         if self.uplift_method == 'uplift_percent':
-            print("%s %% simulations show Uplift Gain Percent above 0.\n"% (np.round(self.uplift_area*100, 2)))
+            print("%s %% simulations show Uplift Gain Percent above 0.\n" %
+                  (np.round(self.uplift_area * 100, 2)))
         elif self.uplift_method == 'uplift_ratio':
-            print("%s %% simulations show Uplift Ratio above 1.\n"% (np.round(self.uplift_area*100, 2)))
+            print("%s %% simulations show Uplift Ratio above 1.\n" %
+                  (np.round(self.uplift_area * 100, 2)))
         elif self.uplift_method == 'uplift_difference':
-            print("%s %% simulations show Uplift Difference above 0.\n"% (np.round(self.uplift_area*100, 2)))
-        
+            print("%s %% simulations show Uplift Difference above 0.\n" %
+                  (np.round(self.uplift_area * 100, 2)))
+
         self.plot_uplift_distributions()
