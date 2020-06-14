@@ -22,6 +22,17 @@ def check_data_input(numerator, denominator):
     elif not isinstance(numerator, int) or not isinstance(denominator, int):
         raise ValueError("Expected input success and trials not type int")
 
+def check_valid_parameter(parameter):
+    """
+    Utility function to check input parameter consistency.
+
+    Parameters
+    ----------
+    parameter : float
+        Type-I or Type-II error rate.
+    """
+    if parameter < 0 and parameter > 1:
+        raise ValueError("Found input parameter %s less than 0 or greater than 1" %(parameter))
 
 def check_t_test(trials_a, trials_b):
     """

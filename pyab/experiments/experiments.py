@@ -6,7 +6,7 @@ import seaborn as sns
 import scipy.stats as st
 import statsmodels.stats.api as sms
 from statsmodels.stats.power import tt_ind_solve_power
-from pyab.utils import check_data_input, check_t_test
+from pyab.utils import check_data_input, check_t_test, check_valid_parameter
 
 class ABTestFrequentist:
     """
@@ -29,13 +29,15 @@ class ABTestFrequentist:
     def __init__(self, alpha=0.05, alt_hypothesis='one_tailed'):
 
         self.alpha = alpha
-
         self.alt_hypothesis = alt_hypothesis
         self.stat = None
         self.stat_null_crit_upper = None
         self.stat_null_crit_lower = None
-
+        
         all_alt_hypothesis = ['one_tailed', 'two_tailed']
+
+        check_valid_parameter(alpha)
+        
         if alt_hypothesis not in all_alt_hypothesis:
             raise ValueError(
                 "ABTestFrequentist class supports hypothesis in %s, got %s"
