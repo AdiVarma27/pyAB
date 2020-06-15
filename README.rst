@@ -4,9 +4,6 @@
 .. image:: https://img.shields.io/pypi/v/pyAB
   :target: https://github.com/AdiVarma27/pyAB
 
-.. image:: https://img.shields.io/github/labels/AdiVarma27/pyAB/help-wanted
-  :target: https://github.com/AdiVarma27/pyAB
-
 .. image:: https://img.shields.io/github/license/AdiVarma27/pyab
   :target: https://github.com/AdiVarma27/pyAB/blob/master/LICENSE
 
