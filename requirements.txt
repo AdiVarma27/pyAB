@@ -1,5 +1,5 @@
-numpy
-matplotlib
-seaborn
-scipy
-statsmodels
+matplotlib==3.0.2
+numpy==1.18.1
+scipy==1.2.0
+seaborn==0.9.0
+statsmodels==0.9.0

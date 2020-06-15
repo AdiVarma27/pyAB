@@ -57,7 +57,7 @@
 <dl class="method">
 <dt id="pyab.experiments.ABTestBayesian.calculate_uplift_area">
 <code class="descname">calculate_uplift_area</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyab.experiments.ABTestBayesian.calculate_uplift_area" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate Uplift pdf &amp; area beyond threshold with provided test parameters.</p>
+<dd><p>Calculate Uplift pdf &amp; area beyond threshold.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -75,7 +75,7 @@
 <dl class="method">
 <dt id="pyab.experiments.ABTestBayesian.conduct_experiment">
 <code class="descname">conduct_experiment</code><span class="sig-paren">(</span><em>success_null</em>, <em>trials_null</em>, <em>success_alt</em>, <em>trials_alt</em>, <em>uplift_method='uplift_percent'</em>, <em>num_simulations=1000</em><span class="sig-paren">)</span><a class="headerlink" href="#pyab.experiments.ABTestBayesian.conduct_experiment" title="Permalink to this definition">¶</a></dt>
-<dd><p>Conduct experiment &amp; generate uplift pdf &amp; cdf with provided parameters.</p>
+<dd><p>Conduct experiment &amp; generate uplift distributions.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -217,7 +217,8 @@
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
 <li><strong>stat</strong> (<em>float</em>) -- z or t statistic.</li>
-<li><strong>pvalue</strong> (<em>float</em>) -- probability of obtaining results atleast as extreme as the results actually observed during the test.</li>
+<li><strong>pvalue</strong> (<em>float</em>) -- probability of obtaining results atleast as extreme as the results
+actually observed during the test.</li>
 </ul>
 </p>
 </td>
@@ -267,9 +268,6 @@
 </dd></dl>
 
 </div>
-<div class="section" id="module-pyab.utils">
-<span id="utils"></span><h2>Utils<a class="headerlink" href="#module-pyab.utils" title="Permalink to this headline">¶</a></h2>
-</div>
 </div>
 
 
@@ -298,7 +296,6 @@
 <li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">pyAB API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#experiments">Experiments</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyab.utils">Utils</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing to pyAB</a></li>

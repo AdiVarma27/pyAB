@@ -49,7 +49,7 @@ Bayesian A/B test results can extremely useful to **understand & communicate tes
 
    90.33 % simulations show Uplift Ratio above 1.
 
-.. image:: ../img/fig2.png
+.. image:: ../img/fig_2.png
 
 
 Frequentist A/B Test
@@ -100,7 +100,7 @@ This traditional methodology might be **slightly tricky to communicate**, and **
 
    There is a statistically significant difference in proportions of two variants.
 
-.. image:: ../img/fig1.png
+.. image:: ../img/fig_1.png
 
 
 Given that the current Type-II error is 0.451 at 1000 samples per variant, we can find out **required sample size per variant** to reach Type-II error of 0.1.

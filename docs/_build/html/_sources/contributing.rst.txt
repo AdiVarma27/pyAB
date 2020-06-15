@@ -19,8 +19,7 @@ General Guidelines
 
 * Code in master branch should reflect the latest version. Create a pull request and add your merge request to the ``dev-pyab`` branch.
 
-* Please follow `pep8`_ for coding conventions and check out `this`_ article for quick help. For detailed information about Git, visit https://rogerdudler.github.io/git-guide/.
+* Please follow `pep8`_ for coding conventions. For quick information about Git, visit https://rogerdudler.github.io/git-guide/.
 
 .. _pep8: https://pep8.org/
 .. _issue tracker: https://github.com/AdiVarma27/pyab/issues
-.. _this: https://github.com/firstcontributions/first-contributions
