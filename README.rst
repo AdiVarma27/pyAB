@@ -1,9 +1,6 @@
 .. image:: https://readthedocs.org/projects/pyab/badge/?version=latest
   :target: https://pyab.readthedocs.io/en/latest/?badge=latest
 
-.. image:: https://img.shields.io/pypi/pyversions/pyAB
-  :target: https://github.com/AdiVarma27/pyAB
-
 .. image:: https://img.shields.io/pypi/v/pyAB
   :target: https://github.com/AdiVarma27/pyAB
 
