@@ -190,6 +190,21 @@ Given that the current Type-II error is 0.451 at 1000 samples per variant, we ca
    2729
 
 
+|
+**Never misinterpret your Results !**
+
+
+|ImageLink|_
+
+.. |ImageLink| image:: https://imgs.xkcd.com/comics/significant.png
+.. _ImageLink: https://imgs.xkcd.com/comics/significant.png
+
+
+
+Read this interesting article about `AA Testing`_.
+
+.. _AA Testing: https://kadavy.net/blog/posts/aa-testing/
+
 =======
 License:
 =======
