@@ -15,4 +15,4 @@ setup(name='pyAB',
           'scipy',
           'statsmodels',
       ],
-      )
+)
